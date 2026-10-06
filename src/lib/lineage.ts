@@ -1,4 +1,4 @@
-import { experience, projects, type SkillGroup } from '@/data/resume';
+import { experience, projects, type Skill } from '@/data/resume';
 
 export interface LineageSource {
   kind: 'role' | 'project';
@@ -6,8 +6,6 @@ export interface LineageSource {
   label: string;
   sub: string;
 }
-
-type Skill = SkillGroup['skills'][number];
 
 /** Every role and project whose stack uses this skill. */
 export function traceSkill(skill: Skill): LineageSource[] {

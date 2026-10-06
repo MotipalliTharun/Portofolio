@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useMemo, useRef, useState, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import type { ProjectTag, StageId } from '@/data/resume';
 import { stages } from '@/data/resume';
@@ -28,6 +28,12 @@ export function UIProvider({ children }: { children: ReactNode }) {
   const [openProjectId, openProject] = useState<string | null>(null);
   const [toasts, setToasts] = useState<{ id: number; message: string }[]>([]);
   const nextId = useRef(0);
+
+  // The root hue follows the active section; fixed UI (nav, rail, Bit) shifts with it.
+  useEffect(() => {
+    const hue = stages.find((s) => s.id === stage)?.hue;
+    if (hue !== undefined) document.documentElement.style.setProperty('--hue', String(hue));
+  }, [stage]);
 
   const toast = useCallback((message: string) => {
     const id = ++nextId.current;

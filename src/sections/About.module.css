@@ -11,10 +11,11 @@
   color: var(--ink-2);
   max-width: 60ch;
 }
-.summary p:first-child {
+.lead {
   font-size: var(--text-xl);
   line-height: 1.5;
   color: var(--ink);
+  font-variant-ligatures: none;
 }
 .stats {
   display: grid;

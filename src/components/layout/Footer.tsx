@@ -12,7 +12,11 @@ export function Footer() {
       <div className={`container ${styles.inner}`}>
         <p>© {new Date().getFullYear()} {profile.name}</p>
         <p className={styles.meta}>
-          Built with React, TypeScript, Motion &amp; Lenis ·{' '}
+          Built with React, TypeScript, Motion &amp; Lenis · Icons by{' '}
+          <a href="https://fontawesome.com" target="_blank" rel="noopener noreferrer" className={styles.credit}>
+            Font Awesome
+          </a>{' '}
+          (CC BY 4.0) ·{' '}
           <button type="button" className={styles.link} onClick={() => setPaletteOpen(true)}>
             press <Kbd>⌘</Kbd> <Kbd>K</Kbd>
           </button>

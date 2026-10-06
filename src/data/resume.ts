@@ -2,6 +2,8 @@
 
 export type StageId = 'hero' | 'about' | 'experience' | 'projects' | 'skills' | 'education' | 'contact';
 
+export type SceneId = 'code' | 'cleanse' | 'join' | 'build' | 'index' | 'archive' | 'serve';
+
 export interface Stage {
   id: StageId;
   index: string;
@@ -9,17 +11,23 @@ export interface Stage {
   nav: string;
   /** What Bit says while this stage is on screen. */
   bitSays: string;
+  /** OKLCH hue for this section's palette. */
+  hue: number;
+  /** What the engineer is doing in this section's scene. */
+  scene: SceneId;
 }
 
 export const stages: Stage[] = [
-  { id: 'hero', index: '00', stage: 'ingest', nav: 'Home', bitSays: 'ingesting…' },
-  { id: 'about', index: '01', stage: 'cleanse', nav: 'About', bitSays: 'cleaning…' },
-  { id: 'experience', index: '02', stage: 'join', nav: 'Experience', bitSays: 'joining…' },
-  { id: 'projects', index: '03', stage: 'build', nav: 'Projects', bitSays: 'building…' },
-  { id: 'skills', index: '04', stage: 'index', nav: 'Skills', bitSays: 'indexing…' },
-  { id: 'education', index: '05', stage: 'archive', nav: 'Education', bitSays: 'archiving…' },
-  { id: 'contact', index: '06', stage: 'serve', nav: 'Contact', bitSays: 'served ✓' },
+  { id: 'hero', index: '00', stage: 'ingest', nav: 'Home', bitSays: 'ingesting…', hue: 222, scene: 'code' },
+  { id: 'about', index: '01', stage: 'cleanse', nav: 'About', bitSays: 'cleaning…', hue: 192, scene: 'cleanse' },
+  { id: 'experience', index: '02', stage: 'join', nav: 'Experience', bitSays: 'joining…', hue: 258, scene: 'join' },
+  { id: 'projects', index: '03', stage: 'build', nav: 'Projects', bitSays: 'building…', hue: 292, scene: 'build' },
+  { id: 'skills', index: '04', stage: 'index', nav: 'Skills', bitSays: 'indexing…', hue: 160, scene: 'index' },
+  { id: 'education', index: '05', stage: 'archive', nav: 'Education', bitSays: 'archiving…', hue: 38, scene: 'archive' },
+  { id: 'contact', index: '06', stage: 'serve', nav: 'Contact', bitSays: 'served ✓', hue: 345, scene: 'serve' },
 ];
+
+export const stageById = (id: StageId): Stage => stages.find((s) => s.id === id)!;
 
 export const profile = {
   name: 'Tharun Motipalli',
@@ -210,86 +218,114 @@ export const projects: Project[] = [
   },
 ];
 
-export interface SkillGroup {
+export interface Skill {
   name: string;
-  skills: { name: string; match?: string[] }[];
+  /** Stack names that count as using this skill (for lineage tracing). Defaults to [name]. */
+  match?: string[];
 }
 
-/** `match` lists the stack names that count as using this skill (for lineage tracing). */
-export const skillGroups: SkillGroup[] = [
+export type FlowStageId = 'ingest' | 'process' | 'store' | 'orchestrate' | 'validate' | 'serve' | 'learn' | 'ship';
+
+export interface FlowStage {
+  id: FlowStageId;
+  label: string;
+  /** How I use these tools in real work. */
+  how: string;
+  /** Where it happened. */
+  where: string;
+  skills: Skill[];
+}
+
+/** Skills placed at the stage of the data platform where I actually use them. */
+export const skillFlow: FlowStage[] = [
   {
-    name: 'Languages',
-    skills: [
-      { name: 'Python' },
-      { name: 'PySpark', match: ['PySpark'] },
-      { name: 'SQL', match: ['SQL', 'Athena', 'PostgreSQL', 'MySQL'] },
-      { name: 'Java' },
-      { name: 'JavaScript', match: ['Node.js'] },
-      { name: 'Shell' },
-    ],
+    id: 'ingest',
+    label: 'Ingest',
+    how: 'Land claims, eligibility and provider files from S3, smart-meter streams from Kafka, and source databases into the raw layer.',
+    where: 'Cigna · clearVUE · Energy Anomaly Detection',
+    skills: [{ name: 'S3' }, { name: 'Kafka' }, { name: 'Glue' }, { name: 'Python' }],
   },
   {
-    name: 'Data engineering',
+    id: 'process',
+    label: 'Process',
+    how: 'Clean, join and enrich data at scale with PySpark notebooks and jobs on Databricks.',
+    where: 'Cigna · Johnson & Johnson · Claims Lakehouse',
     skills: [
+      { name: 'PySpark' },
       { name: 'Apache Spark', match: ['PySpark', 'Spark Streaming'] },
       { name: 'Databricks' },
-      { name: 'Delta Lake' },
-      { name: 'Airflow' },
-      { name: 'Kafka' },
-      { name: 'Data Modeling', match: ['Data Modeling', 'Delta Lake'] },
-      { name: 'Data Quality', match: ['Data Quality', 'Great Expectations'] },
+      { name: 'SQL', match: ['SQL', 'Athena', 'PostgreSQL', 'MySQL'] },
     ],
   },
   {
-    name: 'Cloud (AWS)',
+    id: 'store',
+    label: 'Store',
+    how: 'Model raw, cleansed and curated Delta tables, and design schemas in relational and document stores.',
+    where: 'Cigna · J&J multi-site model · clearVUE',
     skills: [
-      { name: 'S3' },
-      { name: 'Glue' },
-      { name: 'Lambda' },
-      { name: 'Step Functions' },
-      { name: 'API Gateway' },
-      { name: 'Athena' },
+      { name: 'Delta Lake' },
+      { name: 'Data Modeling', match: ['Data Modeling', 'Delta Lake'] },
+      { name: 'PostgreSQL' },
+      { name: 'MySQL' },
+      { name: 'MongoDB' },
     ],
   },
   {
-    name: 'Databases',
-    skills: [{ name: 'PostgreSQL' }, { name: 'MySQL' }, { name: 'MongoDB' }],
+    id: 'orchestrate',
+    label: 'Orchestrate',
+    how: 'Schedule, retry and monitor daily workloads, then triage failures and fix root causes to meet SLAs.',
+    where: 'Cigna · Claims Lakehouse · Triage Assistant',
+    skills: [{ name: 'Airflow' }, { name: 'Step Functions' }, { name: 'Lambda' }],
   },
   {
-    name: 'Backend & ML',
+    id: 'validate',
+    label: 'Validate',
+    how: 'Gate every layer with completeness, duplicate and range checks, plus PHI masking for HIPAA.',
+    where: 'Cigna · J&J quality monitor · DQ Framework',
+    skills: [{ name: 'Data Quality', match: ['Data Quality', 'Great Expectations'] }, { name: 'Great Expectations' }],
+  },
+  {
+    id: 'serve',
+    label: 'Serve',
+    how: 'Expose curated data through REST APIs and fast SQL, and report it in dashboards people use daily.',
+    where: 'Cigna APIs · clearVUE · J&J dashboards',
     skills: [
       { name: 'REST APIs', match: ['REST APIs', 'FastAPI', 'API Gateway'] },
+      { name: 'API Gateway' },
       { name: 'FastAPI' },
-      { name: 'MLflow' },
-      { name: 'scikit-learn' },
-      { name: 'LangChain' },
+      { name: 'Athena' },
+      { name: 'Power BI' },
+      { name: 'Excel' },
     ],
   },
   {
-    name: 'Analytics',
-    skills: [{ name: 'Power BI' }, { name: 'Excel' }],
+    id: 'learn',
+    label: 'Learn',
+    how: 'Score anomalies with ML models tracked in MLflow, and triage failed jobs with an LLM agent.',
+    where: 'Energy Anomaly Detection · Triage Assistant',
+    skills: [{ name: 'scikit-learn' }, { name: 'MLflow' }, { name: 'LangChain' }],
   },
   {
-    name: 'DevOps & tools',
-    skills: [
-      { name: 'Git' },
-      { name: 'Jenkins' },
-      { name: 'Terraform' },
-      { name: 'CI/CD', match: ['Jenkins'] },
-      { name: 'Linux' },
-      { name: 'ServiceNow' },
-    ],
-  },
-  {
-    name: 'Delivery',
-    skills: [
-      { name: 'Agile / Scrum' },
-      { name: 'Code Reviews' },
-      { name: 'Stakeholder Mgmt' },
-      { name: 'Mentoring' },
-    ],
+    id: 'ship',
+    label: 'Ship',
+    how: 'Version everything in Git, and deploy pipelines and infrastructure through Jenkins CI/CD with Terraform.',
+    where: 'Cigna · clearVUE',
+    skills: [{ name: 'Git' }, { name: 'Jenkins' }, { name: 'CI/CD', match: ['Jenkins'] }, { name: 'Terraform' }, { name: 'Linux' }],
   },
 ];
+
+/** Languages run underneath every stage. */
+export const languages: Skill[] = [
+  { name: 'Python' },
+  { name: 'PySpark' },
+  { name: 'SQL', match: ['SQL', 'Athena', 'PostgreSQL', 'MySQL'] },
+  { name: 'Java' },
+  { name: 'JavaScript', match: ['Node.js'] },
+  { name: 'Shell' },
+];
+
+/** How I work with people around the pipeline. */
+export const delivery = ['Agile / Scrum', 'Sprint planning', 'Design & code reviews', 'Stakeholder management', 'Mentoring', 'ServiceNow'];
 
 export const education = [
   {

@@ -46,8 +46,15 @@ function RoleCard({ role }: { role: Role }) {
 
   return (
     <li className={styles.item}>
-      <span className={cn(styles.node, running && styles.nodeRun)} aria-hidden="true" />
-      <Reveal className={styles.card}>
+      <motion.span
+        className={cn(styles.node, running && styles.nodeRun)}
+        aria-hidden="true"
+        initial={{ scale: 0 }}
+        whileInView={{ scale: [0, 1.6, 1] }}
+        viewport={{ once: true, margin: '0px 0px -20% 0px' }}
+        transition={{ duration: 0.6, delay: 0.35 }}
+      />
+      <Reveal className={styles.card} variant="join">
         <div className={styles.when}>
           <span className={styles.dates}>
             {formatMonth(role.start)} – {formatMonth(role.end)}

@@ -24,3 +24,5 @@
   cursor: pointer;
 }
 .link:hover { color: var(--accent); }
+.credit { color: var(--ink-2); }
+.credit:hover { color: var(--accent); }

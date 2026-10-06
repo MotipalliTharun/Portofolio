@@ -3,8 +3,9 @@
   display: inline-block;
   overflow: hidden;
   vertical-align: top;
-  padding-bottom: 0.08em;
-  margin-bottom: -0.08em;
+  /* room for descenders and italic overhang */
+  padding: 0 0.12em 0.08em 0;
+  margin: 0 -0.12em -0.08em 0;
 }
 .word,
 .accent {

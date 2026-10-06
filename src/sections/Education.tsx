@@ -9,7 +9,7 @@ export function Education() {
     <Section id="education" title="Education and research." accent={['research.']}>
       <Reveal className={styles.grid} stagger={0.12}>
         {education.map((e) => (
-          <RevealItem key={e.degree} className={styles.degree}>
+          <RevealItem key={e.degree} className={styles.degree} variant="file">
             <span className={styles.years}>{e.years}</span>
             <h3>{e.short}</h3>
             <p className={styles.school}>{e.school}</p>
@@ -18,7 +18,7 @@ export function Education() {
         ))}
       </Reveal>
 
-      <Reveal delay={0.1}>
+      <Reveal delay={0.1} variant="file">
         <SpotlightCard className={styles.pub}>
           <div className={styles.pubMeta}>
             <span className={styles.pubTag}>publication</span>

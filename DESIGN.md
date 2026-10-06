@@ -177,3 +177,89 @@ the site.
   React does not re-render on scroll.
 - Semantic landmarks, a skip link, visible focus rings, full keyboard support (⌘K, arrows,
   Esc), `aria-live` toasts, and a 4.5:1 minimum text contrast in both themes.
+
+## 7. The engineer: a character for every scene
+
+Version 2 adds a second character: **the engineer**, a 2D anime-style software engineer
+(about 3.5 heads tall) in a cel-shaded hoodie and headphones, drawn with ink line art. His
+face and hair are redrawn after a CC0 shōnen reference (FreeSVG/OpenClipart, see
+CREDITS.md): almond eyes under a heavy upper lid, swept spiky ash-brown hair with spikes
+trailing behind the head and a zigzag shine, and an angular jaw with cel shadows. His hair has layered spiky bangs, a side lock, a shine band and an ahoge (the
+single bouncing strand). His large glossy eyes have two highlights, and the irises take the
+section's hue. He has a two-frame blink, plus brows, blush and a mouth that change with
+each scene. Bit is the data; the engineer is the person who moves it through the pipeline.
+Every section opens with a framed scene, like a comic panel, where he does that stage's job,
+usually to Bit.
+
+### Storyboard
+
+| Scene | Section | What he does | Loop |
+|---|---|---|---|
+| 00 ingest | Hero | Sits at a desk typing; code streams onto the laptop and Bit pops out of the screen | Typing hands, head nod, steaming mug |
+| 01 cleanse | About | Scrubs noise off a big raw Bit with a sponge until it shines | Scrub, specks fade, block turns clean, sparkles |
+| 02 join | Experience | Tightens a pipe junction where two data streams merge into one | Wrench turns, packets flow in from top and bottom, out to the right |
+| 03 build | Projects | Hammers together a stack of API / ETL / DQ blocks | Overhead swing, impact sparks, block jolts |
+| 04 index | Skills | Files skill cards into a cabinet | Reach, drawer slides open, card drops in |
+| 05 archive | Education | Reads in a graduation cap | Page flips, tassel swings, idea bulb lights |
+| 06 serve | Contact | Waves and serves a finished Bit on a tray | Wave, Bit bounces, speech bubble |
+
+### Scene frame
+```
+┌ ● ● ●  scene 03 · build ─────────── ● hammering ┐
+│                         ▒▒ DQ                    │
+│        ╭─╮  🔨          ▒▒▒ ETL                  │
+│        ╰─╯╱             ▒▒▒▒ API                 │
+│ ───────────────────────────────────────────────── │  ← dashed ground line
+└───────────────────────────────────────────────────┘
+```
+Entry: the frame wipes open left to right, then the engineer steps in from the left. Each
+loop runs only while its frame is on screen, so off-screen scenes cost nothing.
+
+### Anime touches
+
+| Scene | Expression | Effect |
+|---|---|---|
+| ingest | focused, eyes on screen | glasses glint sweeps across the lens |
+| cleanse | happy, looking down | soap suds, sparkles |
+| join | determined brows, tight mouth | sweat drop |
+| build | determined, ahoge bouncing in time | smear arc on the downswing, impact sparks |
+| index | calm, eyes on drawer | drawer slide, card drop |
+| archive | reading, small "o" mouth | idea bulb, page flip, tassel swing |
+| serve | ^ ^ closed happy eyes, open smile, stronger blush | sparkles, speech bubble |
+
+Entrance: he hops in from the left, lands with a squash, and settles.
+
+### Props (Font Awesome Free, CC BY 4.0)
+
+Font Awesome icons are placed inside the scenes as inked props through `FaProp`, which
+adds the same line art and fills them with theme tokens so they match the character:
+
+| Scene | Props |
+|---|---|
+| ingest | mug, database poster, floating `</>` |
+| cleanse | broom, bucket, spray can |
+| join | toolbox, code-merge sign |
+| build | hard hat (on his head), wrench |
+| index | open folder on the cabinet, bobbing magnifying glass |
+| archive | lightbulb, diploma scroll |
+| serve | paper plane, envelope, heart |
+
+The Skills diagram's stage icons are Font Awesome as well. Attribution is in the footer and
+CREDITS.md.
+
+### Rig
+One SVG character built from rigged parts: legs (standing or seated), torso, head (neck
+pivot), and two-segment arms (shoulder and elbow pivots). Each scene is a CSS class that poses
+the rig and runs its own keyframes, and each tool (sponge, wrench, hammer, card) is attached to
+the forearm so it moves with the hand. Every resting pose is also each loop's start and end
+frame, so with reduced motion the scene settles into a clean still.
+
+## 8. Section transitions
+
+- **Stage connector:** between every pair of sections, a pipe draws across the page as you
+  scroll, and a packet travels along it from the previous stage to the next
+  (`01 cleanse ──■──▶ 02 join`). It's scroll-linked, so it moves with the visitor.
+- **Motion presets** (`src/lib/motion.ts`): one easing curve, three durations and two springs,
+  plus shared reveal variants (`rise`, `clip`, `scale`) that every component uses.
+- **Section entry:** the kicker rule draws in, the heading rises word by word, the scene frame
+  wipes open and the content reveals with the section's variant.

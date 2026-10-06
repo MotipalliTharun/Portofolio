@@ -1,4 +1,3 @@
-import { motion } from 'motion/react';
 import { useState, type FormEvent } from 'react';
 import { profile } from '@/data/resume';
 import { Section } from '@/components/layout/Section';
@@ -6,16 +5,13 @@ import { Reveal } from '@/components/ui/Reveal';
 import { Button } from '@/components/ui/Button';
 import { CopyButton } from '@/components/ui/CopyButton';
 import { StatusPill } from '@/components/ui/StatusPill';
-import { Bit } from '@/character/Bit';
 import { useNow } from '@/hooks/useNow';
-import { RAIL_QUERY, useMediaQuery } from '@/hooks/useMediaQuery';
 import { useUI } from '@/providers/UIProvider';
 import styles from './Contact.module.css';
 
 export function Contact() {
   const { toast } = useUI();
   const now = useNow(30_000);
-  const hasRail = useMediaQuery(RAIL_QUERY);
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
@@ -43,7 +39,7 @@ export function Contact() {
       intro="I’m open to data engineering roles and happy to talk pipelines, lakehouses or data quality. The fastest way to reach me is email."
     >
       <div className={styles.grid}>
-        <Reveal className={styles.channels}>
+        <Reveal className={styles.channels} variant="slide">
           <StatusPill status="running" label={profile.availability} />
 
           <div className={styles.row}>
@@ -72,14 +68,9 @@ export function Contact() {
             <span className={styles.time}>{time} PT</span>
           </div>
 
-          {!hasRail && (
-            <motion.div className={styles.bit} initial={{ scale: 0.6, opacity: 0 }} whileInView={{ scale: 1, opacity: 1 }} viewport={{ once: true }}>
-              <Bit size={64} mood="served" say="served ✓" bubbleSide="top" />
-            </motion.div>
-          )}
         </Reveal>
 
-        <Reveal delay={0.1}>
+        <Reveal delay={0.15} variant="slide">
           <form className={styles.form} onSubmit={onSubmit} noValidate>
             <p className={styles.formHead}>Write a message</p>
             <label className={styles.field}>

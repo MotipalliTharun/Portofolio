@@ -43,7 +43,7 @@ export function Projects() {
 
       <motion.ul layout className={styles.grid}>
         <AnimatePresence mode="popLayout" initial={false}>
-          {shown.map((p) => (
+          {shown.map((p, i) => (
             <motion.li
               key={p.id}
               layout
@@ -52,7 +52,7 @@ export function Projects() {
               exit={{ opacity: 0, scale: 0.94 }}
               transition={{ type: 'spring', stiffness: 260, damping: 28 }}
             >
-              <Reveal className={styles.cell}>
+              <Reveal className={styles.cell} variant="drop" delay={(i % 2) * 0.12 + Math.floor(i / 2) * 0.08}>
                 <SpotlightCard interactive className={styles.card}>
                   <div className={styles.top}>
                     <span className={styles.kind}>{p.kind}</span>

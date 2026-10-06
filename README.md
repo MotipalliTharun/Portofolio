@@ -24,8 +24,9 @@ npm run preview    # serve the production build
 
 ## Editing content
 
-All text lives in `src/data/resume.ts`: profile, experience, projects, skills,
-education and the publication. Change it there and every section updates.
+All text lives in `src/data/resume.ts`: profile, experience, projects, the skills
+pipeline, education and the publication. Each stage there also sets its section
+hue and the engineer's scene. Change it there and every section updates.
 
 ## Structure
 
@@ -35,13 +36,22 @@ src/
   styles/                 tokens + global styles
   providers/              smooth scroll, UI state (palette, filter, drawer, toasts)
   hooks/                  active section, theme, hotkeys, media query, clock
-  character/Bit.tsx       the mascot (eye tracking, blink, moods, speech)
-  components/ui/          Button, Chip, StatusPill, Reveal, SplitText, Counter,
-                          SpotlightCard, Marquee, CopyButton, Drawer, FlowDiagram, Kbd
-  components/layout/      Nav, PipelineRail, Section, Footer, CommandPalette
+  character/Bit.tsx       the data-packet mascot (eye tracking, blink, moods, speech)
+  character/Engineer.tsx  the anime engineer: rigged SVG + 7 scenes (CSS choreography)
+  character/FaProp.tsx    places Font Awesome icons in scenes as inked props
+  components/ui/          Button, Chip, StatusPill, Reveal, SplitText, ScrambleText,
+                          Counter, SpotlightCard, Marquee, CopyButton, Drawer,
+                          FlowDiagram, SceneFrame, Kbd
+  components/layout/      Nav, PipelineRail, Section, StageConnector, Footer, CommandPalette
+  lib/motion.ts           shared easing, springs and reveal variants
   sections/               Hero, About, Experience, Projects (+ drawer), Skills,
                           Education, Contact
 ```
+
+## Credits
+
+Icons are Font Awesome Free (CC BY 4.0), credited in the footer. See
+[CREDITS.md](CREDITS.md) for all third-party assets and references.
 
 ## Deploy
 

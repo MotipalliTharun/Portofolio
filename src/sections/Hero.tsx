@@ -1,7 +1,9 @@
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { experience, education, profile, ticker } from '@/data/resume';
-import { Bit } from '@/character/Bit';
+import { SceneFrame } from '@/components/ui/SceneFrame';
+import { stageById } from '@/data/resume';
+import type { CSSProperties } from 'react';
 import { Button } from '@/components/ui/Button';
 import { StatusPill } from '@/components/ui/StatusPill';
 import { Marquee } from '@/components/ui/Marquee';
@@ -10,7 +12,7 @@ import { useNow } from '@/hooks/useNow';
 import { formatMonth } from '@/lib/duration';
 import styles from './Hero.module.css';
 
-const EASE = [0.22, 1, 0.36, 1] as const;
+import { ease as EASE } from '@/lib/motion';
 
 interface RunRow {
   taskId: string;
@@ -55,7 +57,6 @@ export function Hero() {
   const scrollTo = useScrollTo();
   const now = useNow();
   const [roleIndex, setRoleIndex] = useState(0);
-  const [bitSays, setBitSays] = useState('ingesting…');
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
   const copyY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -80]);
@@ -71,7 +72,15 @@ export function Hero() {
   const localTime = now.toLocaleTimeString('en-US', { timeZone: profile.timezone, hour: 'numeric', minute: '2-digit' });
 
   return (
-    <section id="hero" ref={ref} className={styles.hero} aria-labelledby="hero-title" tabIndex={-1}>
+    <section
+      id="hero"
+      ref={ref}
+      className={styles.hero}
+      aria-labelledby="hero-title"
+      tabIndex={-1}
+      data-hue
+      style={{ '--hue': stageById('hero').hue } as CSSProperties}
+    >
       <div className={`container ${styles.grid}`}>
         <motion.div className={styles.copy} style={{ y: copyY, opacity: copyOpacity }}>
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: EASE }}>
@@ -145,22 +154,13 @@ export function Hero() {
         </motion.div>
 
         <motion.div className={styles.cardWrap} style={{ y: cardY }}>
-          <motion.div
-            className={styles.bit}
-            initial={reduce ? false : { opacity: 0, y: -30, rotate: -12 }}
-            animate={{ opacity: 1, y: 0, rotate: 0 }}
-            transition={{ type: 'spring', stiffness: 200, damping: 12, delay: 1.2 }}
-            onPointerEnter={() => setBitSays('hi, I’m Bit')}
-            onPointerLeave={() => setBitSays('ingesting…')}
-          >
-            <Bit size={76} mood="raw" say={bitSays} bubbleSide="left" />
-          </motion.div>
+          <SceneFrame stage="hero" className={styles.scene} />
 
           <motion.div
             className={styles.runlog}
-            initial={reduce ? false : { opacity: 0, y: 40, rotateX: 12 }}
-            animate={{ opacity: 1, y: 0, rotateX: 0 }}
-            transition={{ duration: 1, ease: EASE, delay: 0.3 }}
+            initial={reduce ? false : { opacity: 0, y: 30, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ type: 'spring', stiffness: 160, damping: 18, delay: 1.1 }}
           >
             <header className={styles.runHead}>
               <span className={styles.dots} aria-hidden="true"><i /><i /><i /></span>

@@ -1,0 +1,464 @@
+/* ------------------------------------------------------------------ base */
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  /* anime line art: one ink color, round joins everywhere */
+  --ink-line: #1d2430;
+  --lw: 1.5px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+/* Loops only run while the frame is on screen. */
+.svg:not([data-playing]) * {
+  animation-play-state: paused !important;
+}
+
+/* Every rigged part rotates around a pivot given in root SVG coordinates. */
+.rig {
+  transform-box: view-box;
+  animation-fill-mode: both;
+}
+.upper { transform-origin: 84px 130px; animation: breathe 3.2s ease-in-out infinite; }
+.head { transform-origin: 84px 74px; }
+.armRU { transform-origin: 100px 88px; }
+.armRF { transform-origin: 100px 108px; }
+.armLU { transform-origin: 68px 88px; }
+.armLF { transform-origin: 68px 108px; }
+.ahoge { transform-origin: 89px 25.5px; animation: ahoge 2.6s ease-in-out infinite; }
+.tassel { transform-origin: 106px 31.5px; animation: swing 1.6s ease-in-out infinite alternate; }
+.look { transform-origin: 88px 54px; }
+.browL { transform-origin: 79px 42px; }
+.browR { transform-origin: 96.6px 41.4px; }
+
+/* two-frame anime blink: open eyes hide, ^ ^ lines show */
+.eyesOpen { animation: blinkOpen 4.6s infinite; }
+.eyesClosed { opacity: 0; animation: blinkClosed 4.6s infinite; }
+
+@keyframes breathe {
+  50% { transform: translateY(-1.3px) scaleY(1.008); }
+}
+@keyframes blinkOpen {
+  0%, 92%, 97%, 100% { opacity: 1; }
+  93.5%, 95.5% { opacity: 0; }
+}
+@keyframes blinkClosed {
+  0%, 92%, 97%, 100% { opacity: 0; }
+  93.5%, 95.5% { opacity: 1; }
+}
+@keyframes ahoge {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(9deg); }
+}
+@keyframes swing {
+  from { transform: rotate(-10deg); }
+  to { transform: rotate(10deg); }
+}
+
+/* hop-in when the frame first opens: jump, land with a squash, settle */
+.enter { opacity: 0; transform-box: view-box; transform-origin: 86px 184px; }
+.entered { animation: hopIn 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both; }
+@keyframes hopIn {
+  0% { opacity: 0; transform: translate(-48px, 0); }
+  35% { opacity: 1; transform: translate(-22px, -16px) scale(0.98, 1.03); }
+  62% { transform: translate(0, 0) scale(1.05, 0.93); }
+  80% { transform: translate(0, -3px) scale(0.99, 1.02); }
+  100% { opacity: 1; transform: none; }
+}
+
+/* ------------------------------------------------------------- paints */
+.ground { stroke: var(--line-strong); stroke-width: 1.5; stroke-dasharray: 4 5; }
+.shadow { fill: var(--ink); opacity: 0.1; }
+
+/* skin + face */
+.skin,
+.face { fill: var(--char-skin); stroke: var(--ink-line); stroke-width: var(--lw); }
+.skinShade { fill: var(--char-skin-shade); stroke: var(--ink-line); stroke-width: var(--lw); }
+.faceCel { fill: var(--char-skin-shade); opacity: 0.55; }
+.blush { fill: #f58f9a; opacity: 0.42; }
+.nose { fill: none; stroke: #c98a6c; stroke-width: 1.2; }
+
+/* eyes: iris takes the section hue */
+.sclera { fill: #fff; }
+.iris { fill: oklch(0.42 0.12 var(--hue)); transition: fill 0.9s; }
+.irisLight { fill: oklch(0.72 0.12 var(--hue)); opacity: 0.85; transition: fill 0.9s; }
+.pupil { fill: #121722; }
+.shine { fill: #fff; }
+.lash { fill: none; stroke: var(--ink-line); stroke-width: 2.3; }
+.lashFlick { fill: none; stroke: var(--ink-line); stroke-width: 1.4; }
+.brow { fill: none; stroke: var(--char-hair); stroke-width: 1.8; }
+.mouth { fill: none; stroke: var(--ink-line); stroke-width: 1.5; }
+.mouthOpen { fill: #7a2e3a; stroke: var(--ink-line); stroke-width: 1.2; }
+.tongue { fill: #f07e8c; }
+.glasses { fill: rgba(255, 255, 255, 0.14); stroke: var(--ink-line); stroke-width: 1.15; }
+.glassesBridge { fill: none; stroke: var(--ink-line); stroke-width: 1.15; }
+.glint {
+  stroke: #fff;
+  stroke-width: 1.8;
+  opacity: 0;
+  animation: glint 3.6s ease-in-out infinite;
+}
+@keyframes glint {
+  0%, 70% { opacity: 0; transform: translateX(-3px); }
+  76% { opacity: 0.95; }
+  84%, 100% { opacity: 0; transform: translateX(4px); }
+}
+
+/* hair: dark navy with a shine band */
+.hair,
+.hairBack { fill: var(--char-hair); stroke: var(--ink-line); stroke-width: var(--lw); }
+.hairShine { fill: none; stroke: #55628a; stroke-width: 2.4; opacity: 0.9; }
+
+/* hoodie: section hue, cel shadow on the side away from the light */
+.hoodie { fill: var(--accent); stroke: var(--ink-line); stroke-width: var(--lw); transition: fill 0.9s; }
+.hoodieShade { fill: color-mix(in oklch, var(--accent) 72%, #0b1020); stroke: var(--ink-line); stroke-width: var(--lw); transition: fill 0.9s; }
+.hoodieCel { fill: color-mix(in oklch, var(--accent) 72%, #0b1020); opacity: 0.75; }
+.pocket { fill: none; stroke: color-mix(in oklch, var(--accent) 55%, #0b1020); stroke-width: 1.2; }
+.cuff { fill: color-mix(in oklch, var(--accent) 60%, #0b1020); stroke: var(--ink-line); stroke-width: 1.2; }
+.string { fill: none; stroke: #fff; stroke-width: 1.4; }
+.aglet { fill: #fff; stroke: var(--ink-line); stroke-width: 0.8; }
+
+.pants { fill: var(--char-pants); stroke: var(--ink-line); stroke-width: var(--lw); }
+.pantsShade { fill: color-mix(in oklch, var(--char-pants) 75%, #000); stroke: var(--ink-line); stroke-width: var(--lw); }
+.shoe { fill: var(--char-shoe); stroke: var(--ink-line); stroke-width: var(--lw); }
+.sole { stroke: #fff; stroke-width: 2.4; }
+.phones { fill: none; stroke: #2b3242; stroke-width: 3; }
+.phoneCup { fill: #2b3242; stroke: var(--ink-line); stroke-width: 1.2; }
+.cap { fill: #1f2533; stroke: var(--ink-line); stroke-width: 1.2; }
+.tasselLine { fill: none; stroke: var(--run); stroke-width: 1.6; }
+.tasselEnd { fill: var(--run); stroke: var(--ink-line); stroke-width: 0.8; }
+.sweat {
+  fill: #a9dcff;
+  stroke: var(--ink-line);
+  stroke-width: 0.9;
+  animation: sweat 2.2s ease-in infinite;
+}
+@keyframes sweat {
+  0%, 30% { opacity: 0; transform: translateY(-3px); }
+  45% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(7px); }
+}
+
+/* props share the same line art */
+.propDark { fill: var(--prop-dark); stroke: var(--ink-line); stroke-width: 1.2; }
+.stoolLeg { stroke: var(--prop-dark); stroke-width: 3; }
+.desk { fill: var(--prop-dark); stroke: var(--ink-line); stroke-width: 1.2; }
+.deskLeg { fill: var(--line-strong); }
+.screen { fill: var(--screen); }
+.mug { fill: var(--accent-soft); stroke: var(--ink-line); stroke-width: 1.2; }
+.mugHandle { fill: none; stroke: var(--ink-line); stroke-width: 1.6; }
+.steam { fill: none; stroke: var(--muted); stroke-width: 1.4; animation: steam 2.4s ease-in-out infinite; }
+.paper { fill: var(--paper); stroke: var(--ink-line); stroke-width: 1; }
+.paperLine { stroke: var(--line-strong); stroke-width: 1.2; }
+.label { font: 500 7.5px var(--font-mono); fill: var(--muted); }
+.blockText { font: 600 8px var(--font-mono); fill: #fff; text-anchor: middle; }
+
+.tone_accent { fill: var(--accent); transition: fill 0.9s; }
+.tone_raw { fill: var(--raw); }
+.tone_ok { fill: var(--ok); }
+.tone_run { fill: var(--run); }
+rect.tone_accent,
+rect.tone_ok,
+rect.tone_run,
+rect.tone_raw,
+circle.tone_run { stroke: var(--ink-line); stroke-width: 1.1; }
+.packetEye { fill: #fff; }
+
+.sponge { fill: #f6c64f; stroke: var(--ink-line); stroke-width: 1.1; }
+.metal { stroke: #8a98a1; stroke-width: 3.5; }
+.metalRing { fill: none; stroke: #8a98a1; stroke-width: 3; }
+.wood { stroke: #9a6b43; stroke-width: 3.5; }
+.hammerHead { fill: #5b6b75; stroke: var(--ink-line); stroke-width: 1.1; }
+.smear {
+  fill: none;
+  stroke: var(--accent-soft);
+  stroke-width: 7;
+  opacity: 0;
+  animation: smear 1.1s infinite;
+}
+.smearThin { stroke-width: 2.5; stroke: var(--paper); }
+@keyframes smear {
+  0%, 46% { opacity: 0; }
+  55% { opacity: 0.9; }
+  66%, 100% { opacity: 0; }
+}
+
+/* per-scene expressions: where he looks and how his brows sit */
+.code .look { transform: translate(1.2px, 0.4px); }
+.cleanse .look { transform: translate(1px, 1.2px); }
+.join .look { transform: translate(1.2px, 0.8px); }
+.join .browL { transform: rotate(12deg); }
+.join .browR { transform: rotate(-12deg); }
+.build .look { transform: translate(1.4px, -0.3px); }
+.build .browL { transform: rotate(14deg) translateY(1px); }
+.build .browR { transform: rotate(-14deg) translateY(1px); }
+.build .ahoge { animation-duration: 1.1s; }
+.index .look { transform: translate(1.4px, 0.6px); }
+.archive .look { transform: translate(0.6px, 1.8px); }
+.serve .eyesOpen { display: none; }
+.serve .eyesClosed { opacity: 1; animation: none; }
+.serve .blush { opacity: 0.65; }
+
+/* ------------------------------------------------------- 00 code (hero) */
+.code .head { animation: nod 2.4s ease-in-out infinite; }
+.code .armRU { transform: rotate(-55deg); }
+.code .armRF { animation: typeR 0.3s ease-in-out infinite alternate; }
+.code .armLU { transform: rotate(-58deg); }
+.code .armLF { animation: typeL 0.3s ease-in-out infinite alternate-reverse; }
+.codeLine {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: typeLine 3.6s steps(8, end) infinite;
+}
+.popPacket { animation: pop 3.6s cubic-bezier(0.22, 1, 0.36, 1) infinite; }
+@keyframes nod { 50% { transform: rotate(4deg); } }
+@keyframes typeR { from { transform: rotate(-26deg); } to { transform: rotate(-36deg); } }
+@keyframes typeL { from { transform: rotate(-26deg); } to { transform: rotate(-36deg); } }
+@keyframes typeLine {
+  0% { transform: scaleX(0); }
+  40%, 85% { transform: scaleX(1); }
+  100% { transform: scaleX(0); }
+}
+@keyframes pop {
+  0%, 45% { transform: translateY(0); opacity: 0; }
+  55% { opacity: 1; }
+  75% { transform: translateY(-34px); opacity: 1; }
+  92%, 100% { transform: translateY(-40px); opacity: 0; }
+}
+@keyframes steam {
+  0% { opacity: 0; transform: translateY(4px); }
+  40% { opacity: 0.8; }
+  100% { opacity: 0; transform: translateY(-6px); }
+}
+
+/* -------------------------------------------------- 01 cleanse (about) */
+.cleanse .head { transform: rotate(7deg); }
+.cleanse .armRU { animation: scrubU 0.55s ease-in-out infinite; }
+.cleanse .armRF { animation: scrubF 0.55s ease-in-out infinite; }
+.cleanse .armLU { transform: rotate(16deg); }
+.cleanse .armLF { transform: rotate(-30deg); }
+.rawBlock { stroke: var(--ink-line); stroke-width: 1.6; animation: polish 6s ease-in-out infinite; }
+.blockMouth { fill: none; stroke: var(--ink-line); stroke-width: 1.8; }
+.speck { fill: var(--muted); animation: speck 6s ease-in-out infinite; }
+.sparkle {
+  fill: var(--accent);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sparkle 6s ease-in-out infinite;
+}
+.bubble {
+  fill: var(--paper);
+  stroke: var(--line-strong);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: suds 1.1s ease-out infinite;
+}
+@keyframes scrubU { 0%, 100% { transform: rotate(-14deg); } 50% { transform: rotate(-30deg); } }
+@keyframes scrubF { 0%, 100% { transform: rotate(-8deg); } 50% { transform: rotate(-28deg); } }
+@keyframes polish {
+  0%, 12% { fill: var(--bg-sunk); }
+  50%, 88% { fill: var(--accent-soft); }
+  100% { fill: var(--bg-sunk); }
+}
+@keyframes speck {
+  0%, 12% { opacity: 0.7; }
+  42%, 90% { opacity: 0; }
+  100% { opacity: 0.7; }
+}
+@keyframes sparkle {
+  0%, 48% { transform: scale(0) rotate(0deg); opacity: 0; }
+  58% { transform: scale(1) rotate(45deg); opacity: 1; }
+  72%, 100% { transform: scale(0.2) rotate(90deg); opacity: 0; }
+}
+@keyframes suds {
+  0% { transform: scale(0.3); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: scale(1.2) translateY(-8px); opacity: 0; }
+}
+
+/* ------------------------------------------------ 02 join (experience) */
+.join .head { transform: rotate(4deg); }
+.join .armRU { transform: rotate(-35deg); }
+.join .armRF { animation: wrench 0.8s ease-in-out infinite alternate; }
+.join .armLU { transform: rotate(-24deg); }
+.join .armLF { transform: rotate(-62deg); }
+.pipeOuter { fill: none; stroke: var(--line-strong); stroke-width: 15; stroke-linejoin: round; }
+.pipeInner { fill: none; stroke: var(--bg-sunk); stroke-width: 9; stroke-linejoin: round; }
+.coupling { fill: var(--prop-dark); stroke: var(--ink-line); stroke-width: 1.2; }
+.bolt { fill: var(--line-strong); }
+.pktDown { animation: pktDown 1.8s linear infinite; }
+.pktUp { animation: pktUp 1.8s linear infinite; }
+.pktRight { animation: pktRight 1.8s linear infinite; }
+@keyframes wrench { from { transform: rotate(-26deg); } to { transform: rotate(-50deg); } }
+@keyframes pktDown {
+  0% { transform: translateY(0); opacity: 0; }
+  12%, 85% { opacity: 1; }
+  100% { transform: translateY(92px); opacity: 0; }
+}
+@keyframes pktUp {
+  0% { transform: translateY(0); opacity: 0; }
+  12%, 85% { opacity: 1; }
+  100% { transform: translateY(-58px); opacity: 0; }
+}
+@keyframes pktRight {
+  0% { transform: translateX(0); opacity: 0; }
+  12%, 85% { opacity: 1; }
+  100% { transform: translateX(78px); opacity: 0; }
+}
+
+/* -------------------------------------------------- 03 build (projects) */
+.build .head { transform: rotate(5deg); }
+.build .armRU { animation: hammerU 1.1s infinite; }
+.build .armRF { animation: hammerF 1.1s infinite; }
+.build .armLU { transform: rotate(-28deg); }
+.build .armLF { transform: rotate(-40deg); }
+.topBlock { animation: jolt 1.1s infinite; }
+.sparks { transform-box: fill-box; transform-origin: center; animation: spark 1.1s infinite; }
+.sparkLine { stroke: var(--run); stroke-width: 2; stroke-linecap: round; }
+@keyframes hammerU {
+  0%, 40% { transform: rotate(-122deg); animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45); }
+  62% { transform: rotate(-30deg); animation-timing-function: ease-out; }
+  70% { transform: rotate(-36deg); animation-timing-function: ease-in-out; }
+  100% { transform: rotate(-122deg); }
+}
+@keyframes hammerF {
+  0%, 40% { transform: rotate(-40deg); animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45); }
+  62% { transform: rotate(-50deg); animation-timing-function: ease-out; }
+  70% { transform: rotate(-44deg); animation-timing-function: ease-in-out; }
+  100% { transform: rotate(-40deg); }
+}
+@keyframes jolt {
+  0%, 61%, 76%, 100% { transform: translateY(0); }
+  65% { transform: translateY(2.5px); }
+}
+@keyframes spark {
+  0%, 60% { opacity: 0; transform: scale(0.4); }
+  64% { opacity: 1; transform: scale(1); }
+  80%, 100% { opacity: 0; transform: scale(1.35); }
+}
+
+/* --------------------------------------------------- 04 index (skills) */
+.index .head { transform: rotate(4deg); }
+.index .armRU { animation: fileU 3s ease-in-out infinite; }
+.index .armRF { animation: fileF 3s ease-in-out infinite; }
+.index .armLU { transform: rotate(10deg); }
+.card { animation: card 3s infinite; }
+.cabinet { fill: var(--bg-sunk); stroke: var(--ink-line); stroke-width: 1.5; }
+.drawer { fill: var(--bg-elev); stroke: var(--ink-line); stroke-width: 1.2; }
+.drawerOpen { animation: drawer 3s ease-in-out infinite; }
+@keyframes fileU {
+  0%, 100% { transform: rotate(8deg); }
+  35%, 55% { transform: rotate(-26deg); }
+}
+@keyframes fileF {
+  0%, 100% { transform: rotate(-80deg); }
+  35%, 55% { transform: rotate(-22deg); }
+}
+@keyframes card {
+  0%, 42% { opacity: 1; }
+  47%, 88% { opacity: 0; }
+  96%, 100% { opacity: 1; }
+}
+@keyframes drawer {
+  0%, 18% { transform: translateX(0); }
+  32%, 60% { transform: translateX(-14px); }
+  76%, 100% { transform: translateX(0); }
+}
+
+/* ---------------------------------------------- 05 archive (education) */
+.archive .head { animation: read 3.2s ease-in-out infinite; }
+.archive .armRU { transform: rotate(-35deg); }
+.archive .armRF { transform: rotate(-46deg); }
+.archive .armLU { transform: rotate(-50deg); }
+.archive .armLF { transform: rotate(-40deg); }
+.bookPage { fill: var(--paper); stroke: var(--ink-line); stroke-width: 1; }
+.spine { stroke: var(--accent); stroke-width: 2; }
+.page {
+  transform-box: view-box;
+  transform-origin: 120px 103px;
+  animation: flip 3.2s ease-in-out infinite;
+}
+.bulb { animation: idea 3.2s ease-in-out infinite; }
+.rayLine { stroke: var(--run); stroke-width: 1.8; stroke-linecap: round; }
+@keyframes read {
+  0%, 100% { transform: rotate(9deg); }
+  50% { transform: rotate(5deg); }
+}
+@keyframes flip {
+  0%, 52% { transform: scaleX(1); }
+  72%, 100% { transform: scaleX(-1); }
+}
+@keyframes idea {
+  0%, 62% { opacity: 0; transform: translateY(4px); }
+  72%, 92% { opacity: 1; transform: none; }
+  100% { opacity: 0; }
+}
+
+/* --------------------------------------------------- 06 serve (contact) */
+.serve .armRU { transform: rotate(-40deg); }
+.serve .armRF { transform: rotate(-50deg); }
+.serve .armLU { transform: rotate(150deg); }
+.serve .armLF { animation: wave 0.42s ease-in-out infinite alternate; }
+.serve .head { animation: tilt 2.4s ease-in-out infinite; }
+.served { animation: hop 1.2s cubic-bezier(0.22, 1, 0.36, 1) infinite; }
+.check { fill: none; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.speech { animation: float 3s ease-in-out infinite; }
+.speechBox { fill: var(--ink); }
+.speechText { font: 600 10px var(--font-mono); fill: var(--bg); text-anchor: middle; }
+@keyframes wave { from { transform: rotate(-28deg); } to { transform: rotate(22deg); } }
+@keyframes tilt { 50% { transform: rotate(-5deg); } }
+@keyframes hop {
+  0%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-6px); }
+}
+@keyframes float { 50% { transform: translateY(-3px); } }
+
+/* ------------------------------------------- restyle after CC0 anime ref */
+.lowerLid { fill: none; stroke: var(--ink-line); stroke-width: 0.9; opacity: 0.6; }
+.hairShine { fill: none; stroke: var(--char-hair-shine); stroke-width: 1.1; opacity: 0.55; }
+.hairBack { fill: var(--char-hair-shade); }
+
+/* ------------------------------------- Font Awesome props (CC BY 4.0) */
+.fa path {
+  vector-effect: non-scaling-stroke;
+  stroke: var(--ink-line);
+  stroke-width: 1.1px;
+  stroke-linejoin: round;
+}
+.mugFa path { fill: var(--paper); }
+.poster { fill: var(--bg-elev); stroke: var(--ink-line); stroke-width: 1.2; }
+.posterIcon path { fill: var(--accent); stroke: none; transition: fill 0.9s; }
+.floatCode path { fill: var(--accent); }
+.floatCode { animation: floatCode 3.6s cubic-bezier(0.22, 1, 0.36, 1) infinite 1.4s; opacity: 0; }
+.broom path { fill: #c99a5b; }
+.bucket path { fill: var(--accent-soft); }
+.spray path { fill: var(--accent); }
+.toolbox path { fill: #d9534f; }
+.wrenchFa path { fill: #8a98a1; }
+.helmet path { fill: #f4b73a; }
+.folder path { fill: #f2c14e; }
+.magnifier path { fill: var(--ink-2); stroke: none; }
+.magnifier { animation: bob 2.4s ease-in-out infinite; }
+.bulbFa path { fill: var(--run); }
+.scrollFa path { fill: var(--paper); }
+.plane path { fill: var(--accent); }
+.plane { animation: plane 4s ease-in-out infinite; }
+.envelope path { fill: var(--paper); }
+.envelope { animation: float 2.6s ease-in-out infinite 0.4s; }
+.heart path { fill: #f07e8c; }
+.heart { transform-box: fill-box; transform-origin: center; animation: heart 1.2s ease-in-out infinite; }
+
+@keyframes floatCode {
+  0% { opacity: 0; transform: translateY(8px) scale(0.8); }
+  20% { opacity: 1; transform: translateY(0) scale(1); }
+  60% { opacity: 1; transform: translateY(-10px); }
+  80%, 100% { opacity: 0; transform: translateY(-16px); }
+}
+@keyframes bob { 50% { transform: translate(-2px, 3px) rotate(-8deg); } }
+@keyframes plane {
+  0% { transform: translate(0, 4px) rotate(0deg); }
+  50% { transform: translate(14px, -4px) rotate(-6deg); }
+  100% { transform: translate(0, 4px) rotate(0deg); }
+}
+@keyframes heart { 50% { transform: scale(1.25); } }

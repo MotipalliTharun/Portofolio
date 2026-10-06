@@ -3,6 +3,7 @@ import { Section } from '@/components/layout/Section';
 import { Reveal, RevealItem } from '@/components/ui/Reveal';
 import { Counter } from '@/components/ui/Counter';
 import { SpotlightCard } from '@/components/ui/SpotlightCard';
+import { ScrambleText } from '@/components/ui/ScrambleText';
 import styles from './About.module.css';
 
 const fn = ['own()', 'validate()', 'ship()'];
@@ -11,11 +12,12 @@ export function About() {
   return (
     <Section id="about" title="Ownership from requirements to daily operations." accent={['operations.']}>
       <div className={styles.grid}>
-        <Reveal className={styles.summary}>
-          {profile.summary.map((p) => (
-            <p key={p.slice(0, 20)}>{p}</p>
-          ))}
-        </Reveal>
+        <div className={styles.summary}>
+          <ScrambleText text={profile.summary[0]} className={styles.lead} />
+          <Reveal delay={0.4}>
+            <p>{profile.summary[1]}</p>
+          </Reveal>
+        </div>
 
         <Reveal as="ul" className={styles.stats} stagger={0.1}>
           {profile.stats.map((s) => (
@@ -32,7 +34,7 @@ export function About() {
 
       <Reveal className={styles.principles} stagger={0.12}>
         {profile.principles.map((p, i) => (
-          <RevealItem key={p.title}>
+          <RevealItem key={p.title} variant="scale">
             <SpotlightCard className={styles.principle}>
               <code className={styles.fn}>{fn[i]}</code>
               <h3>{p.title}</h3>

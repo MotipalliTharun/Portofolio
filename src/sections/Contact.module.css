@@ -37,7 +37,6 @@ a.value {
 a.value:hover { background-size: 100% 2px; color: var(--accent); }
 .ext { color: var(--muted); }
 .time { font: 400 var(--text-sm) var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
-.bit { justify-self: center; margin-top: 48px; }
 
 .form {
   display: grid;

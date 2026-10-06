@@ -87,14 +87,17 @@
   min-width: 0;
   perspective: 1200px;
 }
-.bit {
-  position: absolute;
-  right: 18px;
-  top: -62px;
-  z-index: 2;
-  cursor: default;
+.scene {
+  width: 100%;
 }
+/* the run log pops out of the laptop like a terminal window */
 .runlog {
+  position: relative;
+  z-index: 2;
+  width: min(360px, 88%);
+  margin: -88px 0 0 auto;
+  margin-right: -18px;
+  transform-origin: 80% 0%;
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-lg);
   background: var(--bg-elev);
@@ -122,9 +125,9 @@
   display: grid;
   grid-template-columns: 12px minmax(0, 1fr) auto;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   width: 100%;
-  padding: 11px 18px;
+  padding: 7px 16px;
   border: 0;
   background: transparent;
   text-align: left;
@@ -139,7 +142,8 @@
 .sqRun { background: var(--run); animation: pulse 1.6s ease-in-out infinite; }
 @keyframes pulse { 50% { opacity: 0.35; } }
 .taskId { min-width: 0; overflow-wrap: anywhere; color: var(--ink); }
-.taskId small { display: block; margin-top: 2px; font-size: 11px; color: var(--muted); }
+.taskId { font-size: 12px; }
+.taskId small { display: block; margin-top: 1px; font-size: 10.5px; color: var(--muted); }
 .st,
 .stRun {
   padding: 2px 9px;
@@ -203,5 +207,9 @@
 
 @media (max-width: 920px) {
   .grid { grid-template-columns: minmax(0, 1fr); }
-  .cardWrap { margin-top: 56px; }
+  .cardWrap { margin-top: 24px; max-width: 560px; }
+  .runlog { margin-top: -36px; margin-right: 0; }
+}
+@media (max-width: 520px) {
+  .runlog { width: 100%; margin: -40px 0 0; }
 }

@@ -21,6 +21,15 @@
   min-width: 0;
 }
 
+.intro { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+.portrait {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--bg-elev);
+  box-shadow: 0 0 0 2px var(--accent), var(--shadow);
+}
 .name {
   font-size: var(--text-hero);
   font-weight: 800;

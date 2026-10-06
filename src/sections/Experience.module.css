@@ -55,6 +55,41 @@
 .duration { color: var(--muted); font-size: var(--text-xs); }
 
 .body { display: grid; gap: 16px; min-width: 0; }
+
+/* industry banner */
+.banner {
+  position: relative;
+  height: 148px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--bg-sunk);
+}
+.banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.02);
+  transition: transform 1s var(--ease);
+}
+.banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, color-mix(in srgb, #0b1418 55%, transparent), transparent 65%);
+}
+.card:hover .banner img { transform: scale(1.06); }
+.industry {
+  position: absolute;
+  left: 14px;
+  bottom: 12px;
+  z-index: 1;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #10202a;
+  font: 600 var(--text-xs) var(--font-mono);
+  letter-spacing: 0.02em;
+}
 .role { font-size: var(--text-xl); font-weight: 700; }
 .company {
   display: flex;
@@ -122,6 +157,7 @@
 .more span { display: inline-block; }
 
 @media (max-width: 760px) {
+  .banner { height: 112px; }
   .timeline { padding-left: 28px; }
   .rail { left: 5px; }
   .node { left: -28px; width: 13px; height: 13px; }

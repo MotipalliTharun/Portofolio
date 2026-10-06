@@ -22,10 +22,11 @@ npm run build      # typecheck + production build into dist/
 npm run preview    # serve the production build
 ```
 
-## Résumé
+## Résumé and portrait
 
-Put your PDF at `public/Tharun_Motipalli_Resume.pdf`. The "Résumé" buttons in the hero
-and contact sections appear only when that file exists.
+- Put your PDF at `public/Tharun_Motipalli_Resume.pdf`; the "Résumé" buttons in the hero,
+  contact section and footer appear only when that file exists.
+- Put a square photo at `public/portrait.jpg`; it appears next to the hero status badge.
 
 ## Editing content
 

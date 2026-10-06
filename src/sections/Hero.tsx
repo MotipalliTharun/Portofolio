@@ -10,6 +10,7 @@ import { Marquee } from '@/components/ui/Marquee';
 import { useScrollTo } from '@/providers/SmoothScroll';
 import { useNow } from '@/hooks/useNow';
 import { usePdfAvailable } from '@/hooks/usePdfAvailable';
+import { useImageAvailable } from '@/hooks/useImageAvailable';
 import { formatMonth } from '@/lib/duration';
 import styles from './Hero.module.css';
 
@@ -59,6 +60,7 @@ export function Hero() {
   const scrollTo = useScrollTo();
   const now = useNow();
   const hasResume = usePdfAvailable(profile.resume);
+  const hasPortrait = useImageAvailable(profile.portrait);
   const [roleIndex, setRoleIndex] = useState(0);
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
@@ -86,7 +88,15 @@ export function Hero() {
     >
       <div className={`container ${styles.grid}`}>
         <motion.div className={styles.copy} style={{ y: copyY, opacity: copyOpacity }}>
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: EASE }}>
+          <motion.div
+            className={styles.intro}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: EASE }}
+          >
+            {hasPortrait && (
+              <img src={profile.portrait} alt={`Portrait of ${profile.name}`} width="64" height="64" className={styles.portrait} />
+            )}
             <StatusPill status="running" label={profile.availability} />
           </motion.div>
 

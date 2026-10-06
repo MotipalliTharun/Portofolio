@@ -8,6 +8,7 @@ import { FlowDiagram } from '@/components/ui/FlowDiagram';
 import { Reveal } from '@/components/ui/Reveal';
 import { useUI, type ProjectFilter } from '@/providers/UIProvider';
 import { projectArt } from '@/data/stickers';
+import { projectPhotos } from '@/data/photos';
 import styles from './Projects.module.css';
 
 const ProjectDrawer = lazy(() => import('./ProjectDrawer'));
@@ -55,16 +56,17 @@ export function Projects() {
             >
               <Reveal className={styles.cell} variant="drop" delay={(i % 2) * 0.12 + Math.floor(i / 2) * 0.08}>
                 <SpotlightCard interactive className={styles.card}>
-                  <div className={styles.top}>
-                    <div className={styles.heading}>
-                      <span className={styles.kind}>{p.kind}</span>
-                      <h3 className={styles.title}>
-                        <button type="button" className={styles.stretch} onClick={() => openProject(p.id)} aria-haspopup="dialog">
-                          {p.title}
-                        </button>
-                      </h3>
-                    </div>
-                    <img src={projectArt[p.id]} alt="" width="76" height="76" loading="lazy" decoding="async" className={styles.art} />
+                  <div className={styles.cover}>
+                    <img src={projectPhotos[p.id]} alt="" width="1100" height="619" loading="lazy" decoding="async" className={styles.photo} />
+                    <img src={projectArt[p.id]} alt="" width="64" height="64" loading="lazy" decoding="async" className={styles.badge} />
+                  </div>
+                  <div className={styles.heading}>
+                    <span className={styles.kind}>{p.kind}</span>
+                    <h3 className={styles.title}>
+                      <button type="button" className={styles.stretch} onClick={() => openProject(p.id)} aria-haspopup="dialog">
+                        {p.title}
+                      </button>
+                    </h3>
                   </div>
                   <p className={styles.summary}>{p.summary}</p>
                   <FlowDiagram steps={p.flow} label={`${p.title} data flow`} />

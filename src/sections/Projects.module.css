@@ -24,32 +24,61 @@
 }
 .cell { height: 100%; }
 .card {
+  --pad: clamp(20px, 3vw, 28px);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
   height: 100%;
-  padding: clamp(22px, 3vw, 32px);
+  padding: var(--pad);
 }
-.top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
-.heading { display: grid; gap: 10px; min-width: 0; }
+.card .heading { padding-top: 22px; }
+.heading { display: grid; gap: 8px; min-width: 0; }
 .kind {
   font: 500 var(--text-xs) var(--font-mono);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--accent);
 }
-/* project illustration: tells you what the project is at a glance */
-.art {
-  flex: none;
-  width: 76px;
-  height: 76px;
-  margin: -6px -6px 0 0;
-  padding: 8px;
-  border-radius: 20px;
-  background: var(--accent-soft);
+
+/* full-bleed cover photo with the project's sticker as an app-style badge */
+.cover {
+  position: relative;
+  margin: calc(var(--pad) * -1) calc(var(--pad) * -1) 18px;
+  aspect-ratio: 16 / 7;
+  max-height: 240px;
+  max-width: none;
+}
+.photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  transition: transform 0.8s var(--ease), filter 0.8s var(--ease);
+  filter: saturate(0.9);
+}
+.cover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: linear-gradient(180deg, transparent 45%, color-mix(in srgb, var(--bg-elev) 55%, transparent));
+  pointer-events: none;
+}
+.card:hover .photo { transform: scale(1.04); filter: saturate(1.05); }
+.badge {
+  position: absolute;
+  left: var(--pad);
+  bottom: -26px;
+  z-index: 1;
+  width: 64px;
+  height: 64px;
+  padding: 7px;
+  border-radius: 18px;
+  background: var(--bg-elev);
+  box-shadow: var(--shadow);
   transition: transform var(--dur) var(--ease);
 }
-.card:hover .art { transform: rotate(-6deg) scale(1.08); }
+.card:hover .badge { transform: rotate(-6deg) scale(1.06); }
 .title { font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.8rem); line-height: 1.15; }
 .stretch {
   padding: 0;
@@ -82,4 +111,8 @@
 
 @media (max-width: 760px) {
   .grid { grid-template-columns: minmax(0, 1fr); }
+}
+/* phones: the flow line lives in the case study; keep cards short */
+@media (max-width: 600px) {
+  .card > p[aria-label] { display: none; }
 }

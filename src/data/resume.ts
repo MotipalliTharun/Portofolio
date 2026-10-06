@@ -42,6 +42,8 @@ export const profile = {
   availability: 'Open to data engineering roles',
   /** Drop the PDF at public/Tharun_Motipalli_Resume.pdf and the résumé buttons appear. */
   resume: `${import.meta.env.BASE_URL}Tharun_Motipalli_Resume.pdf`,
+  /** Drop a square photo at public/portrait.jpg and it appears in the hero. */
+  portrait: `${import.meta.env.BASE_URL}portrait.jpg`,
   rotatingRoles: ['lakehouse pipelines', 'data quality systems', 'REST APIs', 'Airflow workflows'],
   summary: [
     'I’m a software and data engineer with production experience across healthcare (Cigna), pharmaceutical manufacturing (Johnson & Johnson) and UK energy tech (clearVUE).',

@@ -18,6 +18,17 @@
     only in the Skills "How I work with people" cards, where the people are teammates
     and stakeholders.
 
+- **Photos from [Unsplash](https://unsplash.com)** under the
+  [Unsplash License](https://unsplash.com/license) (free for commercial use, attribution
+  not required; credited here anyway). Saved as 1100 px WebP in `public/images/`.
+  - Experience banners: laptop and stethoscope by National Cancer Institute (Cigna,
+    healthcare), scientist with pipette by CDC (J&J, pharma), electric pylon by
+    Nikola Johnny Mirkovic (NGP clearVUE, energy).
+  - Project covers: wind turbines at sunset by Anna Jiménez Calaf (energy anomaly
+    detection), network cables by Taylor Vick (claims lakehouse), analytics graphs by
+    Luke Chesser (data quality framework), code on screen by Chris Ried (failure triage
+    assistant).
+
 ## Used as reference only (not shipped)
 
 - **"Male anime character"** (SVG ID 182593) from FreeSVG.org / OpenClipart —

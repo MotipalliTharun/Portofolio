@@ -7,6 +7,7 @@ import { StatusPill } from '@/components/ui/StatusPill';
 import { ChipList } from '@/components/ui/Chip';
 import { formatDuration, formatMonth, monthsBetween } from '@/lib/duration';
 import { cn } from '@/lib/cn';
+import { rolePhotos } from '@/data/photos';
 import styles from './Experience.module.css';
 
 const PREVIEW = 3;
@@ -64,6 +65,18 @@ function RoleCard({ role }: { role: Role }) {
         </div>
 
         <div className={styles.body}>
+          <div className={styles.banner}>
+            <img
+              src={rolePhotos[role.id].src}
+              alt=""
+              width="1100"
+              height="619"
+              loading="lazy"
+              decoding="async"
+              style={{ objectPosition: rolePhotos[role.id].focus }}
+            />
+            <span className={styles.industry}>{rolePhotos[role.id].industry}</span>
+          </div>
           <header>
             <h3 className={styles.role}>{role.role}</h3>
             <p className={styles.company}>

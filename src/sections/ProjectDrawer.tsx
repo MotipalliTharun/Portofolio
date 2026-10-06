@@ -5,6 +5,7 @@ import { ChipList } from '@/components/ui/Chip';
 import { useUI } from '@/providers/UIProvider';
 import { useCallback, useRef } from 'react';
 import { projectArt } from '@/data/stickers';
+import { projectPhotos } from '@/data/photos';
 import styles from './ProjectDrawer.module.css';
 
 /** Case-study drawer. Lazy-loaded the first time a project is opened. */
@@ -23,7 +24,10 @@ export default function ProjectDrawer() {
     <Drawer open={!!found} onClose={close} labelledBy="case-title">
       {(
         <article key={project.id} className={styles.article}>
-          <img src={projectArt[project.id]} alt="" width="88" height="88" className={styles.art} />
+          <div className={styles.cover}>
+            <img src={projectPhotos[project.id]} alt="" width="1100" height="619" className={styles.photo} />
+            <img src={projectArt[project.id]} alt="" width="72" height="72" className={styles.art} />
+          </div>
           <p className={styles.kind}>case study · {project.kind}</p>
           <h2 id="case-title" className={styles.title}>{project.title}</h2>
           <p className={styles.summary}>{project.summary}</p>

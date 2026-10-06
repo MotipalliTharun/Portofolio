@@ -1,0 +1,14 @@
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  min-width: 86px;
+  padding: 8px 14px;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: transparent;
+  font: 500 var(--text-xs) / 1.2 var(--font-mono);
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }

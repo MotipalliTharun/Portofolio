@@ -1,0 +1,99 @@
+/* Design tokens. Every component reads from these; nothing hard-codes a color. */
+:root {
+  /* color: light */
+  --bg: #f2f5f6;
+  --bg-elev: #ffffff;
+  --bg-sunk: #e8edef;
+  --ink: #10202a;
+  --ink-2: #3c4d58;
+  --muted: #5d6e79;
+  --line: #d5dde1;
+  --line-strong: #b9c6cc;
+  --accent: #0a6c86;
+  --accent-ink: #ffffff;
+  --accent-soft: #d9ebf0;
+  --accent-glow: rgba(10, 108, 134, 0.16);
+  --run: #a35f00;
+  --run-soft: #fbecd4;
+  --ok: #1b7448;
+  --ok-soft: #d8f0e2;
+  --raw: #8a98a1;
+  --shadow: 0 1px 2px rgba(16, 32, 42, 0.06), 0 12px 32px -16px rgba(16, 32, 42, 0.22);
+  --shadow-lg: 0 30px 80px -30px rgba(16, 32, 42, 0.45);
+
+  /* type */
+  --font-display: 'Bricolage Grotesque Variable', 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: clamp(1.35rem, 1.1rem + 0.8vw, 1.6rem);
+  --text-2xl: clamp(2rem, 1.4rem + 2.4vw, 3.2rem);
+  --text-hero: clamp(3.2rem, 1.6rem + 7vw, 7.6rem);
+
+  /* space & shape */
+  --gutter: clamp(16px, 4vw, 40px);
+  --maxw: 1180px;
+  --radius-sm: 6px;
+  --radius: 12px;
+  --radius-lg: 20px;
+  --nav-h: 64px;
+
+  /* motion */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 200ms;
+  --dur: 450ms;
+  --dur-slow: 800ms;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #0b1215;
+    --bg-elev: #121c21;
+    --bg-sunk: #0e171b;
+    --ink: #e3ebee;
+    --ink-2: #b8c6cc;
+    --muted: #8fa1aa;
+    --line: #213038;
+    --line-strong: #31444d;
+    --accent: #5cc3dd;
+    --accent-ink: #062029;
+    --accent-soft: #14303a;
+    --accent-glow: rgba(92, 195, 221, 0.16);
+    --run: #f0b04a;
+    --run-soft: #3a2c12;
+    --ok: #5fcf95;
+    --ok-soft: #133224;
+    --raw: #6b7b84;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -16px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 30px 80px -30px rgba(0, 0, 0, 0.8);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  --bg: #0b1215;
+  --bg-elev: #121c21;
+  --bg-sunk: #0e171b;
+  --ink: #e3ebee;
+  --ink-2: #b8c6cc;
+  --muted: #8fa1aa;
+  --line: #213038;
+  --line-strong: #31444d;
+  --accent: #5cc3dd;
+  --accent-ink: #062029;
+  --accent-soft: #14303a;
+  --accent-glow: rgba(92, 195, 221, 0.16);
+  --run: #f0b04a;
+  --run-soft: #3a2c12;
+  --ok: #5fcf95;
+  --ok-soft: #133224;
+  --raw: #6b7b84;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -16px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 30px 80px -30px rgba(0, 0, 0, 0.8);
+  color-scheme: dark;
+}

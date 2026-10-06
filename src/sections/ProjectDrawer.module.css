@@ -1,0 +1,59 @@
+.article { display: grid; gap: 28px; padding-top: 12px; }
+.kind {
+  font: 500 var(--text-xs) var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.title {
+  margin-top: -16px;
+  font-size: clamp(1.9rem, 1.4rem + 2vw, 2.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  padding-right: 48px;
+}
+.summary { font-size: var(--text-lg); color: var(--ink-2); }
+.block { display: grid; gap: 14px; padding-top: 24px; border-top: 1px solid var(--line); }
+.block h3 {
+  font: 500 var(--text-xs) var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.block p { color: var(--ink-2); }
+.steps {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+.steps li {
+  position: relative;
+  padding-left: 40px;
+  color: var(--ink-2);
+  counter-increment: step;
+}
+.steps li::before {
+  content: counter(step, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  font: 500 var(--text-xs) var(--font-mono);
+  color: var(--accent);
+}
+.next {
+  display: grid;
+  gap: 4px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-elev);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--dur-fast);
+}
+.next:hover { border-color: var(--accent); }
+.nextLabel { font: 500 var(--text-xs) var(--font-mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+.nextTitle { font: 700 var(--text-lg) var(--font-display); }

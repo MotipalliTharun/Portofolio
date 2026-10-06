@@ -1,0 +1,85 @@
+.bit {
+  position: relative;
+  flex: none;
+  --bit-body: var(--raw);
+  --bit-line: var(--ink);
+  --bit-led: var(--run);
+}
+.bit svg { overflow: visible; }
+
+.body {
+  fill: var(--bit-body);
+  transition: fill var(--dur-slow) var(--ease);
+}
+.outline {
+  stroke: var(--bit-line);
+  transition: stroke var(--dur-slow) var(--ease);
+}
+.stroke {
+  stroke: var(--bit-line);
+  transition: stroke var(--dur-slow) var(--ease);
+}
+.led {
+  fill: var(--bit-led);
+  transition: fill var(--dur-slow) var(--ease);
+}
+.eye { fill: #fff; stroke: var(--bit-line); stroke-width: 1.5; }
+.pupil { fill: #10202a; }
+.shadow { fill: var(--ink); opacity: 0.12; }
+
+.noise rect {
+  fill: var(--bit-line);
+  opacity: 0.35;
+  transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease);
+}
+
+.badge circle { fill: var(--ok); stroke: var(--bg); stroke-width: 2; }
+.badge path { stroke: var(--bg); }
+
+/* moods */
+.raw { --bit-body: var(--bg-sunk); --bit-line: var(--muted); --bit-led: var(--run); }
+.clean { --bit-body: var(--accent-soft); --bit-line: var(--accent); --bit-led: var(--accent); }
+.curated { --bit-body: var(--accent); --bit-line: var(--ink); --bit-led: var(--run); }
+.served { --bit-body: var(--ok); --bit-line: var(--ink); --bit-led: var(--ok); }
+.clean .noise rect,
+.curated .noise rect,
+.served .noise rect {
+  opacity: 0;
+  transform: scale(0.2);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* speech bubble */
+.bubble {
+  position: absolute;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: var(--ink);
+  color: var(--bg);
+  font: 500 11px / 1.2 var(--font-mono);
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: var(--shadow);
+}
+.bubble::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: inherit;
+  transform: rotate(45deg);
+}
+.left {
+  right: calc(100% + 10px);
+  top: 38%;
+  transform-origin: right center;
+}
+.left::after { right: -3px; top: calc(50% - 4px); }
+.top {
+  bottom: calc(100% + 6px);
+  left: 50%;
+  translate: -50% 0;
+  transform-origin: center bottom;
+}
+.top::after { bottom: -3px; left: calc(50% - 4px); }

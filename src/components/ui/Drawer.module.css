@@ -1,0 +1,43 @@
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+}
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--ink) 40%, transparent);
+  backdrop-filter: blur(4px);
+}
+.panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(640px, 100%);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--bg);
+  border-left: 1px solid var(--line);
+  box-shadow: var(--shadow-lg);
+  padding: calc(28px + env(safe-area-inset-top, 0px)) clamp(20px, 5vw, 48px) calc(48px + env(safe-area-inset-bottom, 0px));
+  outline: none;
+}
+.close {
+  position: sticky;
+  top: 0;
+  float: right;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--bg-elev);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform var(--dur) var(--ease), border-color var(--dur-fast);
+}
+.close:hover { transform: rotate(90deg); border-color: var(--accent); }

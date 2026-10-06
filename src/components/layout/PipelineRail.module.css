@@ -1,0 +1,78 @@
+.rail {
+  position: fixed;
+  right: 22px;
+  top: 50%;
+  z-index: 40;
+  height: min(56vh, 460px);
+  transform: translateY(-50%);
+  display: none;
+}
+@media (min-width: 1080px) {
+  .rail { display: block; }
+}
+.track {
+  position: relative;
+  width: 2px;
+  height: 100%;
+  background: var(--line);
+  border-radius: 2px;
+}
+.fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.nodes { margin: 0; padding: 0; list-style: none; }
+.nodeItem {
+  position: absolute;
+  left: 1px;
+  transform: translate(-50%, -50%);
+}
+.node {
+  position: relative;
+  display: block;
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border-radius: 50%;
+  border: 2px solid var(--line-strong);
+  background: var(--bg);
+  cursor: pointer;
+  transition: border-color var(--dur) var(--ease), background-color var(--dur) var(--ease), transform var(--dur-fast) var(--ease);
+}
+.node::before { content: ''; position: absolute; inset: -8px; }
+.node:hover { transform: scale(1.3); }
+.done { background: var(--accent); border-color: var(--accent); }
+.current { border-color: var(--accent); background: var(--bg); }
+.label {
+  position: absolute;
+  right: calc(100% + 14px);
+  top: 50%;
+  translate: 0 -50%;
+  padding: 4px 9px;
+  border-radius: 6px;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  font: 500 11px var(--font-mono);
+  color: var(--ink-2);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(6px);
+  transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+.labelIndex { color: var(--accent); }
+.track:hover .label,
+.node:focus-visible .label {
+  opacity: 1;
+  transform: none;
+}
+.rider {
+  position: absolute;
+  left: -48px;
+  translate: 0 -50%;
+  pointer-events: none;
+}

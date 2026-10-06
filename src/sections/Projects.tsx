@@ -1,0 +1,83 @@
+import { AnimatePresence, motion } from 'motion/react';
+import { lazy, Suspense, useEffect, useState } from 'react';
+import { projects, projectTags } from '@/data/resume';
+import { Section } from '@/components/layout/Section';
+import { Chip, ChipList } from '@/components/ui/Chip';
+import { SpotlightCard } from '@/components/ui/SpotlightCard';
+import { FlowDiagram } from '@/components/ui/FlowDiagram';
+import { Reveal } from '@/components/ui/Reveal';
+import { useUI, type ProjectFilter } from '@/providers/UIProvider';
+import styles from './Projects.module.css';
+
+const ProjectDrawer = lazy(() => import('./ProjectDrawer'));
+const filters: ProjectFilter[] = ['all', ...projectTags];
+
+export function Projects() {
+  const { filter, setFilter, openProject, openProjectId } = useUI();
+  // Keep the drawer mounted after first open so its exit animation can play
+  const [drawerLoaded, setDrawerLoaded] = useState(false);
+  useEffect(() => {
+    if (openProjectId) setDrawerLoaded(true);
+  }, [openProjectId]);
+  const shown = projects.filter((p) => filter === 'all' || p.tags.includes(filter));
+
+  return (
+    <Section
+      id="projects"
+      title="Builds that go deeper on the same problems."
+      accent={['deeper']}
+      intro="Each project takes a problem from my day job and explores it end to end. Open one to see the problem, the architecture and the stack."
+    >
+      <Reveal className={styles.toolbar}>
+        <div className={styles.filters} role="group" aria-label="Filter projects by technology">
+          {filters.map((f) => (
+            <Chip key={f} id={`filter-${f}`} size="md" pressed={filter === f} onClick={() => setFilter(f)}>
+              {f === 'all' ? 'All' : f}
+            </Chip>
+          ))}
+        </div>
+        <p className={styles.count} aria-live="polite">
+          <span>{String(shown.length).padStart(2, '0')}</span> / {String(projects.length).padStart(2, '0')} projects
+        </p>
+      </Reveal>
+
+      <motion.ul layout className={styles.grid}>
+        <AnimatePresence mode="popLayout" initial={false}>
+          {shown.map((p) => (
+            <motion.li
+              key={p.id}
+              layout
+              initial={{ opacity: 0, scale: 0.94 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.94 }}
+              transition={{ type: 'spring', stiffness: 260, damping: 28 }}
+            >
+              <Reveal className={styles.cell}>
+                <SpotlightCard interactive className={styles.card}>
+                  <div className={styles.top}>
+                    <span className={styles.kind}>{p.kind}</span>
+                    <span className={styles.open} aria-hidden="true">↗</span>
+                  </div>
+                  <h3 className={styles.title}>
+                    <button type="button" className={styles.stretch} onClick={() => openProject(p.id)} aria-haspopup="dialog">
+                      {p.title}
+                    </button>
+                  </h3>
+                  <p className={styles.summary}>{p.summary}</p>
+                  <FlowDiagram steps={p.flow} label={`${p.title} data flow`} />
+                  <div className={styles.foot}>
+                    <ChipList items={p.stack} highlight={(s) => filter !== 'all' && s.toLowerCase().includes(filter.toLowerCase().split(' ')[0])} />
+                  </div>
+                </SpotlightCard>
+              </Reveal>
+            </motion.li>
+          ))}
+        </AnimatePresence>
+      </motion.ul>
+
+      <Suspense fallback={null}>
+        {drawerLoaded && <ProjectDrawer />}
+      </Suspense>
+    </Section>
+  );
+}

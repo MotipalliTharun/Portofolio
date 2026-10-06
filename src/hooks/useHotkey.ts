@@ -1,0 +1,15 @@
+import { useEffect } from 'react';
+
+/** Bind ⌘/Ctrl + key. */
+export function useModHotkey(key: string, handler: () => void): void {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === key) {
+        e.preventDefault();
+        handler();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [key, handler]);
+}

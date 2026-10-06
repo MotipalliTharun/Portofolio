@@ -1,0 +1,15 @@
+.wrap { display: inline; }
+.mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.word,
+.accent {
+  display: inline-block;
+  transform-origin: 0 100%;
+  will-change: transform;
+}
+.accent { color: var(--accent); font-style: italic; font-weight: 600; }

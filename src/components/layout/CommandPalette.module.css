@@ -1,0 +1,97 @@
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: max(12vh, 64px) var(--gutter) 24px;
+}
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--ink) 35%, transparent);
+  backdrop-filter: blur(6px);
+}
+.dialog {
+  position: relative;
+  width: min(620px, 100%);
+  border: 1px solid var(--line-strong);
+  border-radius: 16px;
+  background: var(--bg-elev);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+.search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+}
+.search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+  font: 400 var(--text-lg) var(--font-body);
+}
+.search input::placeholder { color: var(--muted); }
+.list {
+  max-height: min(52vh, 420px);
+  margin: 0;
+  padding: 8px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  list-style: none;
+}
+.group {
+  padding: 10px 10px 6px;
+  font: 500 11px var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  isolation: isolate;
+}
+.highlight {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 10px;
+  background: var(--accent-soft);
+}
+.itemLabel { font-weight: 500; }
+.itemActive .itemLabel { color: var(--accent); }
+.itemHint {
+  font: 400 var(--text-xs) var(--font-mono);
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.empty { padding: 28px 12px; text-align: center; color: var(--muted); }
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 16px;
+  border-top: 1px solid var(--line);
+  background: var(--bg-sunk);
+  font: 400 var(--text-xs) var(--font-mono);
+  color: var(--muted);
+}
+.footer span { display: inline-flex; align-items: center; gap: 4px; }
+.count { margin-left: auto; }

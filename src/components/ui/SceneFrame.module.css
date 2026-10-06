@@ -1,3 +1,4 @@
+.wrap { position: relative; }
 .frame {
   position: relative;
   margin: 0;
@@ -43,4 +44,9 @@
     linear-gradient(color-mix(in oklch, var(--accent) 8%, transparent) 1px, transparent 1px),
     linear-gradient(90deg, color-mix(in oklch, var(--accent) 8%, transparent) 1px, transparent 1px);
   background-size: 20px 20px;
+}
+
+@media (max-width: 600px) {
+  .bar { display: none; }
+  .stage { padding: 8px 10px 2px; }
 }

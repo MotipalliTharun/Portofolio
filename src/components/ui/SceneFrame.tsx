@@ -26,7 +26,7 @@ export function SceneFrame({ stage, className, bare }: SceneFrameProps) {
   const meta = sceneMeta[s.scene];
 
   return (
-    <div ref={ref} className={className}>
+    <div ref={ref} className={`${styles.wrap} ${className ?? ''}`}>
       <motion.figure
         className={styles.frame}
         initial={reduce ? false : { clipPath: 'inset(0% 100% 0% 0% round 18px)' }}

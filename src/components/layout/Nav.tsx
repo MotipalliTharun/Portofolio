@@ -50,11 +50,15 @@ export function Nav() {
         animate={{ y: hidden ? '-110%' : '0%' }}
         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className={cn('container', styles.inner)}>
+        <div className={cn(styles.bar, scrolled && styles.barScrolled)}>
           <a href="#hero" className={styles.mark} onClick={(e) => go(e, 'hero')} aria-label={`${profile.name}, back to top`}>
-            <span className={styles.monogram} aria-hidden="true">TM</span>
-            <span className={styles.wordmark}>
-              tharun<span className={styles.dot}>.</span>motipalli
+            <span className={styles.monogram} aria-hidden="true">
+              TM
+              <span className={styles.liveDot} />
+            </span>
+            <span className={styles.brandText}>
+              <span className={styles.wordmark}>{profile.name}</span>
+              <span className={styles.role}>{profile.title.toLowerCase()} · open to roles</span>
             </span>
           </a>
 
@@ -69,7 +73,10 @@ export function Nav() {
                     aria-current={stage === l.id ? 'true' : undefined}
                   >
                     {stage === l.id && <motion.span layoutId="nav-pill" className={styles.pill} transition={{ type: 'spring', stiffness: 380, damping: 32 }} />}
-                    <span className={styles.linkText}>{l.nav}</span>
+                    <span className={styles.linkText}>
+                      <span className={styles.linkIndex}>{l.index}</span>
+                      {l.nav}
+                    </span>
                   </a>
                 </li>
               ))}
@@ -90,6 +97,10 @@ export function Nav() {
             >
               <ThemeIcon dark={theme === 'dark'} />
             </button>
+            <a href="#contact" className={styles.cta} onClick={(e) => go(e, 'contact')}>
+              Let’s talk
+              <span aria-hidden="true">→</span>
+            </a>
             <button
               type="button"
               className={cn(styles.icon, styles.menuBtn)}
@@ -101,8 +112,8 @@ export function Nav() {
               <span className={cn(styles.burger, menuOpen && styles.burgerOpen)} aria-hidden="true" />
             </button>
           </div>
+          <motion.div className={styles.progress} style={{ scaleX: progress }} aria-hidden="true" />
         </div>
-        <motion.div className={styles.progress} style={{ scaleX: progress }} aria-hidden="true" />
       </motion.header>
 
       <AnimatePresence>

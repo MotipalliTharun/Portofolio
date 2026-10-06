@@ -41,5 +41,5 @@
 }
 .packet i { width: 3.5px; height: 3.5px; border-radius: 50%; background: #fff; }
 @media (max-width: 520px) {
-  .label { display: none; }
+  .label:first-child { display: none; }
 }

@@ -7,6 +7,7 @@ import { SpotlightCard } from '@/components/ui/SpotlightCard';
 import { FlowDiagram } from '@/components/ui/FlowDiagram';
 import { Reveal } from '@/components/ui/Reveal';
 import { useUI, type ProjectFilter } from '@/providers/UIProvider';
+import { projectArt } from '@/data/stickers';
 import styles from './Projects.module.css';
 
 const ProjectDrawer = lazy(() => import('./ProjectDrawer'));
@@ -55,18 +56,23 @@ export function Projects() {
               <Reveal className={styles.cell} variant="drop" delay={(i % 2) * 0.12 + Math.floor(i / 2) * 0.08}>
                 <SpotlightCard interactive className={styles.card}>
                   <div className={styles.top}>
-                    <span className={styles.kind}>{p.kind}</span>
-                    <span className={styles.open} aria-hidden="true">↗</span>
+                    <div className={styles.heading}>
+                      <span className={styles.kind}>{p.kind}</span>
+                      <h3 className={styles.title}>
+                        <button type="button" className={styles.stretch} onClick={() => openProject(p.id)} aria-haspopup="dialog">
+                          {p.title}
+                        </button>
+                      </h3>
+                    </div>
+                    <img src={projectArt[p.id]} alt="" width="76" height="76" loading="lazy" decoding="async" className={styles.art} />
                   </div>
-                  <h3 className={styles.title}>
-                    <button type="button" className={styles.stretch} onClick={() => openProject(p.id)} aria-haspopup="dialog">
-                      {p.title}
-                    </button>
-                  </h3>
                   <p className={styles.summary}>{p.summary}</p>
                   <FlowDiagram steps={p.flow} label={`${p.title} data flow`} />
                   <div className={styles.foot}>
                     <ChipList items={p.stack} highlight={(s) => filter !== 'all' && s.toLowerCase().includes(filter.toLowerCase().split(' ')[0])} />
+                    <span className={styles.more} aria-hidden="true">
+                      Case study <span>→</span>
+                    </span>
                   </div>
                 </SpotlightCard>
               </Reveal>

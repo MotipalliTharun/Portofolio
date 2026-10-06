@@ -7,6 +7,17 @@
   Used as scene props (mug, toolbox, helmet, lightbulb, paper plane, …) and as the
   Skills stage icons. Package: `@fortawesome/free-solid-svg-icons`.
 
+- **Stickers by [kerismaker](https://www.flaticon.com/authors/kerismaker) from
+  [Flaticon](https://www.flaticon.com)**. Flaticon free license: attribution required
+  (credited in the site footer). Downloaded as 512 px PNGs and resized for the web,
+  stored in `public/stickers/`.
+  - "Web Development" pack (objects): database, embedded (chip), setting (gears),
+    server, bug, search engine, download (folder), update (upload). Used as the Skills
+    pipeline stage icons and as the project card / case-study illustrations.
+  - "School & University Activity" pack (people): statistic, course, language. Used
+    only in the Skills "How I work with people" cards, where the people are teammates
+    and stakeholders.
+
 ## Used as reference only (not shipped)
 
 - **"Male anime character"** (SVG ID 182593) from FreeSVG.org / OpenClipart —

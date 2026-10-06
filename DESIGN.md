@@ -180,15 +180,13 @@ the site.
 
 ## 7. The engineer: a character for every scene
 
-Version 2 adds a second character: **the engineer**, a 2D anime-style software engineer
-(about 3.5 heads tall) in a cel-shaded hoodie and headphones, drawn with ink line art. His
-face and hair are redrawn after a CC0 shōnen reference (FreeSVG/OpenClipart, see
-CREDITS.md): almond eyes under a heavy upper lid, swept spiky ash-brown hair with spikes
-trailing behind the head and a zigzag shine, and an angular jaw with cel shadows. His hair has layered spiky bangs, a side lock, a shine band and an ahoge (the
-single bouncing strand). His large glossy eyes have two highlights, and the irises take the
-section's hue. He has a two-frame blink, plus brows, blush and a mouth that change with
-each scene. Bit is the data; the engineer is the person who moves it through the pipeline.
-Every section opens with a framed scene, like a comic panel, where he does that stage's job,
+Version 2 adds a second character: **the engineer**. He's drawn in the same flat sticker
+style as the Flaticon stickers by kerismaker that decorate the scene frames: no outlines,
+soft flat fills, small dot eyes with a highlight, rosy cheeks and a simple smile, about 4.3
+heads tall. He wears a swept black fringe, a black long-sleeve top with an orange lanyard
+badge, slate trousers and sneakers with orange soles, so he reads as one of the sticker
+cast. Bit is the data; the engineer is the person who moves it through the pipeline. Every
+section opens with a framed scene, like a comic panel, where he does that stage's job,
 usually to Bit.
 
 ### Storyboard
@@ -215,17 +213,17 @@ usually to Bit.
 Entry: the frame wipes open left to right, then the engineer steps in from the left. Each
 loop runs only while its frame is on screen, so off-screen scenes cost nothing.
 
-### Anime touches
+### Expressions and effects
 
 | Scene | Expression | Effect |
 |---|---|---|
-| ingest | focused, eyes on screen | glasses glint sweeps across the lens |
-| cleanse | happy, looking down | soap suds, sparkles |
+| ingest | focused smile, eyes on screen | floating `</>`, steaming mug |
+| cleanse | ^ ^ happy eyes, open smile | soap suds, sparkles |
 | join | determined brows, tight mouth | sweat drop |
-| build | determined, ahoge bouncing in time | smear arc on the downswing, impact sparks |
+| build | determined brows, hard hat | smear arc on the downswing, impact sparks |
 | index | calm, eyes on drawer | drawer slide, card drop |
 | archive | reading, small "o" mouth | idea bulb, page flip, tassel swing |
-| serve | ^ ^ closed happy eyes, open smile, stronger blush | sparkles, speech bubble |
+| serve | ^ ^ happy eyes, open smile, stronger blush | sparkles, speech bubble |
 
 Entrance: he hops in from the left, lands with a squash, and settles.
 
@@ -263,3 +261,17 @@ frame, so with reduced motion the scene settles into a clean still.
   plus shared reveal variants (`rise`, `clip`, `scale`) that every component uses.
 - **Section entry:** the kicker rule draws in, the heading rises word by word, the scene frame
   wipes open and the content reveals with the section's variant.
+
+## 9. Props: every sticker means something
+
+Flaticon stickers (kerismaker) are placed only where they carry information:
+
+| Where | Sticker | Meaning |
+|---|---|---|
+| Skills pipeline stages | folder, gears, database, magnifier, server, chip, upload | the object that does that stage's job; greyed out until data reaches the stage, full colour once it has |
+| Project cards and case-study drawer | chip, database, magnifier, bug | what the project is: ML, lakehouse, data quality, failure triage |
+| "How I work with people" cards | presenter, mentor, translator | sprint demos to stakeholders, code reviews and mentoring, bridging Chennai and UK teams; each card is backed by a resume line |
+
+In-scene props are limited to ones the story needs (laptop and mug; broom and bucket;
+toolbox; hard hat; cabinet and folder; lightbulb and diploma; paper plane). Nothing is
+placed only to fill space.

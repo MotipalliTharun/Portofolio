@@ -40,15 +40,19 @@ export const profile = {
   linkedin: 'https://www.linkedin.com/in/tharun-motipalli',
   linkedinLabel: 'linkedin.com/in/tharun-motipalli',
   availability: 'Open to data engineering roles',
+  /** Drop the PDF at public/Tharun_Motipalli_Resume.pdf and the résumé buttons appear. */
+  resume: `${import.meta.env.BASE_URL}Tharun_Motipalli_Resume.pdf`,
   rotatingRoles: ['lakehouse pipelines', 'data quality systems', 'REST APIs', 'Airflow workflows'],
   summary: [
     'I’m a software and data engineer with production experience across healthcare (Cigna), pharmaceutical manufacturing (Johnson & Johnson) and UK energy tech (clearVUE).',
     'I own delivery end to end, from requirements and design to deployment and daily operations, building scalable pipelines and APIs with Python, PySpark, SQL, Databricks and AWS. I lead sprint demos and code reviews, mentor teammates and work closely with engineering, analytics, operations and client teams.',
   ],
-  stats: [
-    { value: 3, suffix: '', label: 'Industries shipped in', detail: 'Healthcare, pharma, energy' },
-    { value: 4, suffix: '', label: 'Build projects', detail: 'Streaming, lakehouse, DQ, LLM' },
-    { value: 6, suffix: '', label: 'AWS services in production', detail: 'S3, Glue, Lambda, Step Fn, API GW, Athena' },
+  /** The facts a recruiter scans for first. */
+  glance: [
+    { label: 'Now', value: 'Data Engineer, The Cigna Group' },
+    { label: 'Domains', value: 'Healthcare · Pharma · Energy' },
+    { label: 'Core stack', value: 'PySpark · Databricks · AWS · Airflow' },
+    { label: 'Education', value: 'M.S. Computer Science, Florida Tech' },
   ],
   principles: [
     {
@@ -324,8 +328,26 @@ export const languages: Skill[] = [
   { name: 'Shell' },
 ];
 
-/** How I work with people around the pipeline. */
-export const delivery = ['Agile / Scrum', 'Sprint planning', 'Design & code reviews', 'Stakeholder management', 'Mentoring', 'ServiceNow'];
+/** How I work with people around the pipeline. Each line comes from the resume. */
+export const practices = [
+  {
+    id: 'demos',
+    title: 'Demo every sprint',
+    body: 'Lead two-week sprint demos at Cigna and presented dashboard updates to operations, quality and IT teams at J&J.',
+  },
+  {
+    id: 'mentoring',
+    title: 'Review and mentor',
+    body: 'Lead design and code reviews, and mentored new interns on the codebase and Git workflow.',
+  },
+  {
+    id: 'client',
+    title: 'Bridge time zones',
+    body: 'Point of contact between the Chennai team and UK stakeholders, turning client feedback into user stories.',
+  },
+];
+
+export const delivery = ['Agile / Scrum', 'Sprint planning', 'Stakeholder management', 'ServiceNow'];
 
 export const education = [
   {

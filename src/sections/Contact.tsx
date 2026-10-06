@@ -7,11 +7,13 @@ import { CopyButton } from '@/components/ui/CopyButton';
 import { StatusPill } from '@/components/ui/StatusPill';
 import { useNow } from '@/hooks/useNow';
 import { useUI } from '@/providers/UIProvider';
+import { usePdfAvailable } from '@/hooks/usePdfAvailable';
 import styles from './Contact.module.css';
 
 export function Contact() {
   const { toast } = useUI();
   const now = useNow(30_000);
+  const hasResume = usePdfAvailable(profile.resume);
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
@@ -59,6 +61,18 @@ export function Contact() {
             </div>
             <span className={styles.ext} aria-hidden="true">↗</span>
           </div>
+
+          {hasResume && (
+            <div className={styles.row}>
+              <div>
+                <span className={styles.label}>Résumé</span>
+                <a className={styles.value} href={profile.resume} target="_blank" rel="noopener noreferrer">
+                  Tharun_Motipalli_Resume.pdf
+                </a>
+              </div>
+              <span className={styles.ext} aria-hidden="true">↓</span>
+            </div>
+          )}
 
           <div className={styles.row}>
             <div>

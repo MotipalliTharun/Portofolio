@@ -33,18 +33,10 @@
   padding: 0 0.08em 0.06em 0;
 }
 .line > span { display: inline-block; }
-.outline {
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--ink);
-  background: linear-gradient(90deg, var(--accent), var(--accent)) no-repeat 0 100% / 0% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  transition: background-size 0.9s var(--ease);
-}
-.name:hover .outline { background-size: 100% 100%; }
+.surname { color: var(--accent); }
 
 .lede {
-  max-width: 34ch;
+  max-width: 30ch;
   font-size: var(--text-xl);
   line-height: 1.45;
   color: var(--ink-2);
@@ -55,6 +47,9 @@
   overflow: hidden;
   vertical-align: bottom;
 }
+.sizer,
+.role { grid-area: 1 / 1; }
+.sizer { visibility: hidden; font-weight: 600; white-space: nowrap; }
 .role {
   display: inline-block;
   color: var(--accent);
@@ -210,6 +205,7 @@
   .cardWrap { margin-top: 24px; max-width: 560px; }
   .runlog { margin-top: -36px; margin-right: 0; }
 }
-@media (max-width: 520px) {
-  .runlog { width: 100%; margin: -40px 0 0; }
+/* phones: the run log repeats the Experience timeline, so the scene stands alone */
+@media (max-width: 600px) {
+  .runlog { display: none; }
 }

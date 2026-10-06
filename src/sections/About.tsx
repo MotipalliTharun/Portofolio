@@ -1,7 +1,6 @@
 import { profile } from '@/data/resume';
 import { Section } from '@/components/layout/Section';
 import { Reveal, RevealItem } from '@/components/ui/Reveal';
-import { Counter } from '@/components/ui/Counter';
 import { SpotlightCard } from '@/components/ui/SpotlightCard';
 import { ScrambleText } from '@/components/ui/ScrambleText';
 import styles from './About.module.css';
@@ -19,16 +18,16 @@ export function About() {
           </Reveal>
         </div>
 
-        <Reveal as="ul" className={styles.stats} stagger={0.1}>
-          {profile.stats.map((s) => (
-            <RevealItem as="li" key={s.label} className={styles.stat}>
-              <span className={styles.value}>
-                <Counter value={s.value} suffix={s.suffix} />
-              </span>
-              <span className={styles.statLabel}>{s.label}</span>
-              <span className={styles.statDetail}>{s.detail}</span>
-            </RevealItem>
-          ))}
+        <Reveal className={styles.glance} stagger={0.08}>
+          <p className={styles.glanceTitle}>At a glance</p>
+          <dl className={styles.facts}>
+            {profile.glance.map((f) => (
+              <RevealItem key={f.label} className={styles.fact}>
+                <dt>{f.label}</dt>
+                <dd>{f.value}</dd>
+              </RevealItem>
+            ))}
+          </dl>
         </Reveal>
       </div>
 

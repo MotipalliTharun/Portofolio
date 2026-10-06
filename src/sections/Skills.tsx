@@ -1,8 +1,9 @@
 import { AnimatePresence, motion, useInView, useReducedMotion } from 'motion/react';
 import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
-import { delivery, languages, skillFlow, type FlowStageId, type Skill } from '@/data/resume';
+import { delivery, languages, practices, skillFlow, type FlowStageId, type Skill } from '@/data/resume';
+import { practiceArt, stageArt } from '@/data/stickers';
 import { Section } from '@/components/layout/Section';
-import { Reveal } from '@/components/ui/Reveal';
+import { Reveal, RevealItem } from '@/components/ui/Reveal';
 import { traceSkill, type LineageSource } from '@/lib/lineage';
 import { useUI } from '@/providers/UIProvider';
 import { useScrollTo } from '@/providers/SmoothScroll';
@@ -34,6 +35,13 @@ const ICONS: Record<FlowStageId, IconDefinition> = {
   learn: faBrain,
   ship: faRocket,
 };
+
+/** Flaticon object for the stage where one fits; Font Awesome otherwise. */
+function StageArt({ id }: { id: FlowStageId }) {
+  const art = stageArt[id];
+  if (art) return <img src={art} alt="" width="40" height="40" draggable={false} />;
+  return <StageIcon icon={ICONS[id]} />;
+}
 
 function StageIcon({ icon }: { icon: IconDefinition }) {
   const [w, h, , , d] = icon.icon;
@@ -156,7 +164,7 @@ export function Skills() {
                   transition={{ ...spring.bouncy, delay: i * 0.07 }}
                 >
                   <span className={cn(styles.icon, styles[`icon_${s.id}`])} aria-hidden="true">
-                    <StageIcon icon={ICONS[s.id]} />
+                    <StageArt id={s.id} />
                     {i === active && touring && (
                       <svg key={`ring-${active}`} className={styles.ring} viewBox="0 0 48 48">
                         <circle cx="24" cy="24" r="22" style={{ animationDuration: `${TOUR_MS}ms` }} />
@@ -296,8 +304,20 @@ export function Skills() {
         </div>
       </div>
 
-      <Reveal className={styles.delivery} delay={0.1}>
-        <span className={styles.bandLabel}>around the pipeline</span>
+      {/* How I work with people: the only place people stickers appear */}
+      <div className={styles.practices}>
+        <h3 className={styles.practicesTitle}>How I work with people around the pipeline</h3>
+        <Reveal as="ul" className={styles.practiceList} stagger={0.12}>
+          {practices.map((p) => (
+            <RevealItem as="li" key={p.id} variant="scale" className={styles.practice}>
+              <img src={practiceArt[p.id]} alt="" width="112" height="112" loading="lazy" decoding="async" className={styles.practiceArt} />
+              <div>
+                <h4>{p.title}</h4>
+                <p>{p.body}</p>
+              </div>
+            </RevealItem>
+          ))}
+        </Reveal>
         <ul className={styles.bandList}>
           {delivery.map((d) => (
             <li key={d} className={styles.deliveryItem}>
@@ -305,7 +325,7 @@ export function Skills() {
             </li>
           ))}
         </ul>
-      </Reveal>
+      </div>
     </Section>
   );
 }

@@ -4,6 +4,7 @@ import { FlowDiagram } from '@/components/ui/FlowDiagram';
 import { ChipList } from '@/components/ui/Chip';
 import { useUI } from '@/providers/UIProvider';
 import { useCallback, useRef } from 'react';
+import { projectArt } from '@/data/stickers';
 import styles from './ProjectDrawer.module.css';
 
 /** Case-study drawer. Lazy-loaded the first time a project is opened. */
@@ -22,6 +23,7 @@ export default function ProjectDrawer() {
     <Drawer open={!!found} onClose={close} labelledBy="case-title">
       {(
         <article key={project.id} className={styles.article}>
+          <img src={projectArt[project.id]} alt="" width="88" height="88" className={styles.art} />
           <p className={styles.kind}>case study · {project.kind}</p>
           <h2 id="case-title" className={styles.title}>{project.title}</h2>
           <p className={styles.summary}>{project.summary}</p>

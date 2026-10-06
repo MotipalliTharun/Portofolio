@@ -22,6 +22,11 @@ npm run build      # typecheck + production build into dist/
 npm run preview    # serve the production build
 ```
 
+## Résumé
+
+Put your PDF at `public/Tharun_Motipalli_Resume.pdf`. The "Résumé" buttons in the hero
+and contact sections appear only when that file exists.
+
 ## Editing content
 
 All text lives in `src/data/resume.ts`: profile, experience, projects, the skills
@@ -37,7 +42,7 @@ src/
   providers/              smooth scroll, UI state (palette, filter, drawer, toasts)
   hooks/                  active section, theme, hotkeys, media query, clock
   character/Bit.tsx       the data-packet mascot (eye tracking, blink, moods, speech)
-  character/Engineer.tsx  the anime engineer: rigged SVG + 7 scenes (CSS choreography)
+  character/Engineer.tsx  the engineer: rigged flat-style SVG + 7 scenes (CSS choreography)
   character/FaProp.tsx    places Font Awesome icons in scenes as inked props
   components/ui/          Button, Chip, StatusPill, Reveal, SplitText, ScrambleText,
                           Counter, SpotlightCard, Marquee, CopyButton, Drawer,

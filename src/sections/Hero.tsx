@@ -9,6 +9,7 @@ import { StatusPill } from '@/components/ui/StatusPill';
 import { Marquee } from '@/components/ui/Marquee';
 import { useScrollTo } from '@/providers/SmoothScroll';
 import { useNow } from '@/hooks/useNow';
+import { usePdfAvailable } from '@/hooks/usePdfAvailable';
 import { formatMonth } from '@/lib/duration';
 import styles from './Hero.module.css';
 
@@ -39,6 +40,7 @@ const rows: RunRow[] = [
 ].sort((a, b) => b.start.localeCompare(a.start));
 
 const current = experience.find((e) => !e.end)!;
+const longestRole = profile.rotatingRoles.reduce((a, b) => (b.length > a.length ? b : a));
 
 function elapsedSince(ym: string, now: Date) {
   const [y, m] = ym.split('-').map(Number);
@@ -56,6 +58,7 @@ export function Hero() {
   const reduce = useReducedMotion();
   const scrollTo = useScrollTo();
   const now = useNow();
+  const hasResume = usePdfAvailable(profile.resume);
   const [roleIndex, setRoleIndex] = useState(0);
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
@@ -91,7 +94,7 @@ export function Hero() {
             {[profile.firstName, profile.lastName].map((part, i) => (
               <span key={part} className={styles.line} aria-hidden="true">
                 <motion.span
-                  className={i === 1 ? styles.outline : undefined}
+                  className={i === 1 ? styles.surname : undefined}
                   initial={reduce ? false : { y: '105%' }}
                   animate={{ y: '0%' }}
                   transition={{ duration: 1.1, ease: EASE, delay: 0.1 + i * 0.12 }}
@@ -110,7 +113,11 @@ export function Hero() {
           >
             {profile.title} who builds{' '}
             <span className={styles.rotator}>
-              <AnimatePresence mode="wait" initial={false}>
+              {/* invisible longest phrase reserves the slot so nothing jumps */}
+              <span className={styles.sizer} aria-hidden="true">
+                {longestRole}
+              </span>
+              <AnimatePresence initial={false}>
                 <motion.span
                   key={profile.rotatingRoles[roleIndex]}
                   className={styles.role}
@@ -122,8 +129,7 @@ export function Hero() {
                   {profile.rotatingRoles[roleIndex]}
                 </motion.span>
               </AnimatePresence>
-            </span>
-            <br />
+            </span>{' '}
             that healthcare, pharma and energy teams can trust.
           </motion.p>
 
@@ -136,6 +142,11 @@ export function Hero() {
             <Button variant="primary" size="lg" magnetic onClick={() => scrollTo('#projects')} icon="→">
               View my work
             </Button>
+            {hasResume && (
+              <Button size="lg" href={profile.resume} external magnetic icon="↓">
+                Résumé
+              </Button>
+            )}
             <Button size="lg" href={profile.linkedin} external magnetic icon="↗">
               LinkedIn
             </Button>

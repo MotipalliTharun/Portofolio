@@ -79,8 +79,8 @@
   position: relative;
   display: grid;
   place-items: center;
-  width: 52px;
-  height: 52px;
+  width: 60px;
+  height: 60px;
   border: 1.5px solid var(--line-strong);
   border-radius: 16px;
   background: var(--bg);
@@ -89,11 +89,26 @@
     border-color var(--dur) var(--ease), color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
 .icon svg path { fill: currentColor; }
-.done .icon { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+/* Flaticon stage objects: greyed out until data reaches the stage */
+.icon img {
+  width: 40px;
+  height: 40px;
+  filter: grayscale(0.85) opacity(0.55);
+  transition: filter var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.done .icon img,
+.active .icon img { filter: none; }
+.node:hover .icon img { filter: none; transform: scale(1.06); }
+.active .icon img { animation: arrive 1.4s var(--ease) infinite; }
+@keyframes arrive {
+  0%, 100% { transform: translateY(0) scale(1); }
+  40% { transform: translateY(-3px) scale(1.08); }
+}
+.done .icon { border-color: color-mix(in oklch, var(--accent) 50%, var(--line-strong)); color: var(--accent); background: var(--accent-soft); }
 .active .icon {
   border-color: var(--accent);
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: var(--bg-elev);
+  color: var(--accent);
   transform: translateY(-4px) scale(1.08);
   box-shadow: 0 12px 28px -10px var(--accent), 0 0 0 6px var(--accent-glow);
 }
@@ -162,8 +177,7 @@
 @keyframes flow { to { left: 100%; } }
 
 /* ---------- languages band */
-.band,
-.delivery {
+.band {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -281,7 +295,41 @@
 .empty { color: var(--muted); }
 .lineageFoot { margin-top: 14px; font: 400 var(--text-xs) var(--font-mono); color: var(--muted); }
 
-.delivery { margin-top: 18px; border-style: solid; border-color: var(--line); }
+/* how I work */
+.practices { display: grid; gap: 18px; margin-top: clamp(40px, 6vw, 64px); }
+.practicesTitle {
+  font: 500 var(--text-xs) var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.practiceList {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.practice {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px 16px 10px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--bg-elev);
+}
+.practice h4 { font: 700 var(--text-lg) var(--font-display); letter-spacing: -0.01em; }
+.practice p { margin-top: 4px; font-size: var(--text-sm); color: var(--muted); }
+.practiceArt { width: 112px; height: 112px; transition: transform var(--dur) var(--ease); }
+.practice:hover .practiceArt { transform: rotate(-4deg) scale(1.05); }
+@media (max-width: 980px) {
+  .practiceList { grid-template-columns: minmax(0, 1fr); }
+  .practice { grid-template-columns: 92px minmax(0, 1fr); }
+  .practiceArt { width: 92px; height: 92px; }
+}
 .deliveryItem {
   padding: 5px 11px;
   border-radius: 999px;

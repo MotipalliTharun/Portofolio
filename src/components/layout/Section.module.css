@@ -4,6 +4,8 @@
   scroll-margin-top: var(--nav-h);
   outline: none;
   isolation: isolate;
+  /* entrance variants start offset sideways; clip so they never widen the page */
+  overflow-x: clip;
 }
 /* each section washes the page in its own hue */
 .section::before {
@@ -28,23 +30,6 @@
   gap: 18px;
   min-width: 0;
 }
-.kicker {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font: 500 var(--text-xs) var(--font-mono);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.index { color: var(--accent); }
-.rule {
-  display: block;
-  width: 48px;
-  height: 2px;
-  background: var(--accent);
-  transform-origin: 0 50%;
-}
 .title {
   font-size: var(--text-2xl);
   font-weight: 700;
@@ -59,6 +44,11 @@
 .scene { width: 100%; }
 
 @media (max-width: 860px) {
-  .header { grid-template-columns: minmax(0, 1fr); align-items: start; }
+  .header { grid-template-columns: minmax(0, 1fr); align-items: start; gap: 24px; }
   .scene { max-width: 420px; }
+}
+/* phones: the scene is a supporting illustration, not the first screen */
+@media (max-width: 600px) {
+  .header { margin-top: 28px; margin-bottom: 32px; }
+  .scene { max-width: 300px; justify-self: center; }
 }

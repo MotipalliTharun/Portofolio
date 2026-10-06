@@ -1,21 +1,14 @@
-import { useId, type ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import {
   faBroom,
   faBucket,
-  faCode,
-  faCodeMerge,
-  faEnvelope,
   faFolderOpen,
-  faHeart,
   faHelmetSafety,
   faLightbulb,
-  faMagnifyingGlass,
   faMugHot,
   faPaperPlane,
   faScroll,
-  faSprayCanSparkles,
   faToolbox,
-  faWrench,
   faDatabase,
 } from '@fortawesome/free-solid-svg-icons';
 import { FaProp } from './FaProp';
@@ -100,80 +93,56 @@ function Legs({ seated }: { seated: boolean }) {
         <rect x="58" y="130" width="42" height="7" rx="3.5" className={styles.propDark} />
         <line x1="66" y1="137" x2="61" y2="184" className={styles.stoolLeg} />
         <line x1="93" y1="137" x2="98" y2="184" className={styles.stoolLeg} />
-        {/* far leg, then near leg */}
-        <rect x="111" y="126" width="11" height="50" rx="5.5" className={styles.pantsShade} />
-        <rect x="76" y="121" width="44" height="12" rx="6" className={styles.pantsShade} />
-        <rect x="74" y="124" width="42" height="12.5" rx="6.25" className={styles.pants} />
-        <rect x="104" y="128" width="12" height="48" rx="6" className={styles.pants} />
-        <Shoe x={109} />
-        <Shoe x={102} />
+        <rect x="110" y="127" width="12" height="49" rx="6" className={styles.pantsShade} />
+        <rect x="74" y="122" width="43" height="13" rx="6.5" className={styles.pants} />
+        <rect x="103" y="127" width="12.5" height="49" rx="6.25" className={styles.pants} />
+        <Shoe x={108} />
+        <Shoe x={101} />
       </g>
     );
   }
   return (
     <g>
-      <rect x="72" y="122" width="12" height="54" rx="6" className={styles.pantsShade} />
-      <rect x="86" y="122" width="12" height="54" rx="6" className={styles.pants} />
+      <rect x="72" y="122" width="12.5" height="54" rx="6.25" className={styles.pantsShade} />
+      <rect x="86" y="122" width="12.5" height="54" rx="6.25" className={styles.pants} />
       <Shoe x={70} />
       <Shoe x={85} />
     </g>
   );
 }
 
+/** Flat sneaker with an orange sole. */
 function Shoe({ x }: { x: number }) {
   return (
     <g>
-      <path d={`M${x} 181 v-4.5 q0 -4 4.5 -4 h6 q7 0 8 6.5 v2 z`} className={styles.shoe} />
-      <path d={`M${x} 181 h18.5`} className={styles.sole} />
+      <path d={`M${x} 181 v-4.5 q0 -4.8 5.4 -4.8 h5.4 q8.6 0 9.6 7.6 v1.7 z`} className={styles.shoe} />
+      <rect x={x} y="179.6" width="20.4" height="2.8" rx="1.4" className={styles.sole} />
     </g>
   );
 }
 
-function Eyes() {
-  const id = useId().replace(/:/g, '');
-  const L = 'M73.5 53.2 Q76.5 49.4 81.5 49.6 Q84.6 50 85.4 52.6 Q84.6 57.2 79.6 57.6 Q75.4 57.4 73.5 53.2 Z';
-  const R = 'M91.8 52.6 Q93.4 49.8 97.4 49.6 Q101.2 49.8 102.4 53 Q100.6 57.2 96.8 57.4 Q93 57.2 91.8 52.6 Z';
+function Face({ scene }: { scene: SceneId }) {
   return (
     <g>
-      <defs>
-        <clipPath id={`eyeL${id}`}>
-          <path d={L} />
-        </clipPath>
-        <clipPath id={`eyeR${id}`}>
-          <path d={R} />
-        </clipPath>
-      </defs>
-      {/* open eyes: almond sclera, section-hued iris tucked under a heavy upper lid */}
+      {/* dot eyes with a highlight; ^ ^ when happy */}
       <g className={cn(styles.rig, styles.eyesOpen)}>
-        <path d={L} className={styles.sclera} />
-        <path d={R} className={styles.sclera} />
         <g className={cn(styles.rig, styles.look)}>
-          <g clipPath={`url(#eyeL${id})`}>
-            <ellipse cx="80" cy="54" rx="3.2" ry="4" className={styles.iris} />
-            <ellipse cx="80" cy="55.6" rx="2.2" ry="1.8" className={styles.irisLight} />
-            <ellipse cx="80" cy="53.8" rx="1.4" ry="2.1" className={styles.pupil} />
-            <circle cx="78.8" cy="52.2" r="1.1" className={styles.shine} />
-          </g>
-          <g clipPath={`url(#eyeR${id})`}>
-            <ellipse cx="97.4" cy="54" rx="2.8" ry="4" className={styles.iris} />
-            <ellipse cx="97.4" cy="55.6" rx="1.9" ry="1.8" className={styles.irisLight} />
-            <ellipse cx="97.4" cy="53.8" rx="1.25" ry="2.1" className={styles.pupil} />
-            <circle cx="96.3" cy="52.2" r="1" className={styles.shine} />
-          </g>
+          <ellipse cx="80.5" cy="53" rx="1.8" ry="2.4" className={styles.eye} />
+          <ellipse cx="93" cy="53" rx="1.7" ry="2.4" className={styles.eye} />
+          <circle cx="80" cy="52.1" r="0.65" className={styles.eyeShine} />
+          <circle cx="92.5" cy="52.1" r="0.6" className={styles.eyeShine} />
         </g>
-        <path d="M70.6 52 L72.6 52.8 Q76.5 48.2 82 48.6 Q85.5 49 86.6 52.2" className={styles.lash} />
-        <path d="M90.8 51.6 Q94 48.4 98 48.6 Q101.8 49 103 52.4 L104.8 53.6" className={styles.lash} />
-        <path d="M76 57.7 Q79.5 58.5 83 57.3" className={styles.lowerLid} />
-        <path d="M94 57.4 Q97 58.2 100 57" className={styles.lowerLid} />
       </g>
-      {/* closed happy eyes ^ ^ (blink frames, and the serve scene) */}
       <g className={cn(styles.rig, styles.eyesClosed)}>
-        <path d="M73.8 55 Q79 50.4 84.8 54.4" className={styles.lash} />
-        <path d="M92 54.4 Q97 50.4 102.4 55" className={styles.lash} />
+        <path d="M78.2 53.8 Q80.5 51 82.8 53.8" className={styles.eyeLine} />
+        <path d="M90.7 53.8 Q93 51 95.3 53.8" className={styles.eyeLine} />
       </g>
-      {/* thin angled brows */}
-      <path d="M73.6 46.4 Q78.6 43.6 84.4 45" className={cn(styles.rig, styles.brow, styles.browL)} />
-      <path d="M92.4 44.8 Q97.4 43.4 102.2 45.8" className={cn(styles.rig, styles.brow, styles.browR)} />
+      <path d="M77.6 48.4 Q80.4 46.8 83 47.8" className={cn(styles.rig, styles.brow, styles.browL)} />
+      <path d="M90.4 47.6 Q93 46.6 95.8 48.2" className={cn(styles.rig, styles.brow, styles.browR)} />
+      <path d="M88 55.4 Q89.8 58.6 87.4 59.4" className={styles.nose} />
+      <ellipse cx="77.4" cy="59.6" rx="3" ry="1.8" className={styles.blush} />
+      <ellipse cx="96.2" cy="59.6" rx="2.6" ry="1.7" className={styles.blush} />
+      <Mouth scene={scene} />
     </g>
   );
 }
@@ -181,20 +150,28 @@ function Eyes() {
 function Mouth({ scene }: { scene: SceneId }) {
   switch (scene) {
     case 'serve':
+    case 'cleanse':
       return (
         <g>
-          <path d="M84.2 64.6 Q88.6 65.6 93 64.6 Q92 71 88.6 71 Q85.2 71 84.2 64.6 Z" className={styles.mouthOpen} />
-          <path d="M86.2 69.2 Q88.6 67.6 91 69.2 Q88.6 70.8 86.2 69.2 Z" className={styles.tongue} />
+          <path d="M83.6 62 Q88 63.2 92.4 61.8 Q91.4 68 88 68 Q84.6 68 83.6 62 Z" className={styles.mouth} />
+          <path d="M84.3 62.2 Q88 63.1 91.7 62 L91.4 63.6 Q88 64.3 84.6 63.8 Z" className={styles.teeth} />
+          <path d="M85.8 66.6 Q88 65.2 90.2 66.6 Q88 67.8 85.8 66.6 Z" className={styles.tongue} />
         </g>
       );
     case 'build':
-      return <path d="M85.6 67 L91.6 66.2" className={styles.mouth} />;
     case 'join':
-      return <path d="M85.6 67.4 Q88.6 65.9 91.6 67.4" className={styles.mouth} />;
+      return <path d="M85 64.2 Q88 63 91 64.2" className={styles.mouthLine} />;
     case 'archive':
-      return <ellipse cx="88.6" cy="67" rx="1.5" ry="1.9" className={styles.mouthOpen} />;
+      return <ellipse cx="88" cy="64.2" rx="1.4" ry="1.7" className={styles.mouth} />;
+    case 'code':
+      return <path d="M85 63 Q88 65.6 91 62.8" className={styles.mouthLine} />;
     default:
-      return <path d="M85 65.8 Q88.6 68.8 92.2 65.8" className={styles.mouth} />;
+      return (
+        <g>
+          <path d="M84.2 62.4 Q88 63.4 91.6 62.2 Q90.6 66.6 87.8 66.6 Q85 66.6 84.2 62.4 Z" className={styles.mouth} />
+          <path d="M84.9 62.6 Q88 63.3 91 62.4 L90.8 63.6 Q88 64.2 85.2 63.8 Z" className={styles.teeth} />
+        </g>
+      );
   }
 }
 
@@ -203,13 +180,13 @@ function Arm({ side, scene }: { side: 'L' | 'R'; scene: SceneId }) {
   const front = side === 'R';
   return (
     <g className={cn(styles.rig, front ? styles.armRU : styles.armLU)}>
-      <rect x={x - 5.5} y="83" width="11" height="26" rx="5.5" className={front ? styles.hoodie : styles.hoodieShade} />
+      <rect x={x - 6} y="83" width="12" height="27" rx="6" className={front ? styles.top : styles.topShade} />
       <g className={cn(styles.rig, front ? styles.armRF : styles.armLF)}>
-        <rect x={x - 5} y="103" width="10" height="20" rx="5" className={front ? styles.hoodie : styles.hoodieShade} />
-        <rect x={x - 5} y="119.5" width="10" height="5.5" rx="2.5" className={styles.cuff} />
+        <rect x={x - 5.5} y="103" width="11" height="21" rx="5.5" className={front ? styles.top : styles.topShade} />
+        <rect x={x - 5.5} y="119.5" width="11" height="5" rx="2.5" className={styles.cuff} />
         {front && <Tool scene={scene} />}
-        <circle cx={x} cy="128.6" r="4.7" className={front ? styles.skin : styles.skinShade} />
-        <ellipse cx={x + 3.6} cy="126.8" rx="1.9" ry="2.6" className={front ? styles.skin : styles.skinShade} />
+        <circle cx={x} cy="128.6" r="4.8" className={front ? styles.skin : styles.skinShade} />
+        <ellipse cx={x + 3.4} cy="126.6" rx="1.8" ry="2.5" className={front ? styles.skin : styles.skinShade} />
       </g>
     </g>
   );
@@ -224,68 +201,36 @@ export function Engineer({ scene }: { scene: SceneId }) {
       <g className={cn(styles.rig, styles.upper)}>
         <Arm side="L" scene={scene} />
 
-        {/* hoodie with cel shadow, pocket and drawstrings */}
-        <path d="M66 86 C66 82 70 80 76 80 H92 C98 80 102 82 102 86 L104 124 C104 129 101 132 96 132 H72 C67 132 64 129 64 124 Z" className={styles.hoodie} />
-        <path d="M67 84 C66 98 65 112 64.6 124 C64.6 129 67 132 72 132 H74.5 C72.5 116 72 100 73 82 Z" className={styles.hoodieCel} />
-        <path d="M73 111 H95 L97 124 H71 Z" className={styles.pocket} />
-        <path d="M80.5 86 L79.6 98" className={styles.string} />
-        <path d="M88 86 L88.8 98" className={styles.string} />
-        <circle cx="79.6" cy="99" r="1.2" className={styles.aglet} />
-        <circle cx="88.8" cy="99" r="1.2" className={styles.aglet} />
-
-        {/* hood collar + neck + headphones */}
-        <path d="M68 84 Q84 72 100 84 Q94 89.5 84 89.5 Q74 89.5 68 84 Z" className={styles.hoodieShade} />
-        <path d="M80 68 H88.5 V82 Q84.2 85 80 82 Z" className={styles.skinShade} />
-        <path d="M70 80 Q84 93 98 80" className={styles.phones} />
-        <rect x="64" y="74" width="7.5" height="10.5" rx="3.2" className={styles.phoneCup} />
-        <rect x="96.5" y="74" width="7.5" height="10.5" rx="3.2" className={styles.phoneCup} />
+        {/* neck, then black long-sleeve top with a shaded side, crew neck and lanyard badge */}
+        <rect x="79.8" y="64" width="9.4" height="20" rx="3.5" className={styles.skinShade} />
+        <path d="M67 88 C67 83.6 71 81 77 81 H91 C97 81 101 83.6 101 88 L103.5 124 C104 129.5 100.5 133 95 133 H73 C67.5 133 64 129.5 64.5 124 Z" className={styles.top} />
+        <path d="M67.4 85.6 C66.2 98 65 112 64.6 124 C64.6 129.5 67.6 133 73 133 H75.6 C73.4 117 73 101 74.2 83 C71 82.8 68.8 83.6 67.4 85.6 Z" className={styles.topShade} />
+        <path d="M78 81 Q84.5 88.4 91 81" className={styles.collar} />
+        <path d="M79.6 83.4 L84.4 99.4 L89.4 83.4" className={styles.lanyard} />
+        <rect x="80.4" y="98.6" width="8" height="10.4" rx="1.6" className={styles.badge} />
+        <rect x="82" y="101" width="4.8" height="2.6" rx="0.8" className={styles.badgeChip} />
 
         {/* head */}
         <g className={cn(styles.rig, styles.head)}>
-          {/* back hair with spikes swept behind the head */}
-          <path
-            d="M66 52 C60 50 54 47 49 44.5 C55 43.4 59.6 42.2 62.6 40.2 C57.6 37 53.6 33.2 51.4 29.6 C57.6 30.8 62.6 31.8 66 32 C68.4 26 76 21 86 21 C100 21 109 31 108 46 C108 55 106 62 103 66 L99 52 L70 54 L68 64 C66.4 60 66 56 66 52 Z"
-            className={styles.hairBack}
-          />
-          <ellipse cx="68.8" cy="55.5" rx="3.6" ry="4.6" className={styles.skin} />
-          <path d="M67.6 55.6 q1.4 -2.4 2.4 0.4" className={styles.nose} />
-          <path
-            d="M68.5 45 C68.5 34 76.5 28.5 86.5 28.5 C97 28.5 104 35.5 104 45.5 C104 53 102.5 59 99 64.5 L91.5 72.5 C89.5 74.6 86.6 75 84.6 73.8 C78 70 71.5 63 69.5 55.5 C68.8 52 68.5 48.5 68.5 45 Z"
-            className={styles.face}
-          />
-          {/* cel shadows: jagged hair shadow on the forehead, cheek shadow away from the light */}
-          <path
-            d="M69 43 L72 47.4 L74.6 44 L78 48.4 L81.6 44.6 L85 48.8 L88.6 44.6 L92.6 48.2 L95 44 L99 48.6 L101 44.2 L104 46.6 V42 C100 39 94 38 86 38 C78 38 72 40 69 43 Z"
-            className={styles.faceCel}
-          />
-          <path d="M69.5 55.5 C71.5 63 78 70 84.6 73.8 C79.6 73 73.8 68.2 71.2 61.6 Z" className={styles.faceCel} />
-          <ellipse cx="77.5" cy="62.2" rx="3.4" ry="1.4" className={styles.blush} />
-          <ellipse cx="98" cy="62" rx="2.8" ry="1.3" className={styles.blush} />
-          <Eyes />
-          <path d="M91.6 57.8 L93.6 62.2 L91.2 62.8" className={styles.nose} />
-          <Mouth scene={scene} />
-          {/* swept bangs: sharp strands falling between the eyes */}
-          <path
-            d="M67.5 47 C66.5 34 75 25 87 24.5 C99.5 24 106.5 32.5 106 44.5 L102.4 39.5 L101.6 48 L97 40 L94 50.6 L90.6 40.6 L86.6 49.8 L83.4 41 L79 49 L76.6 41.8 L72.6 49.5 L71 44 Z"
-            className={styles.hair}
-          />
-          <path d="M68 43 C65.5 51 66 60 69.2 67.5 C70.6 61 71.2 52 72 45 Z" className={styles.hair} />
-          <path d="M74.6 31.4 L78.2 35 L80.8 30.8 L84.4 35 L87 30.2 L90.6 34.4 L93.2 30.6 L96.8 33.8" className={styles.hairShine} />
-          <path d="M98.6 32.6 Q102.4 35.4 103.6 40" className={styles.hairShine} />
-          {scene !== 'build' && (
-            <g className={cn(styles.rig, styles.ahoge)}>
-              <path d="M88 25.6 C86 18 90 12.6 96.6 14.4 C92.2 15.6 90.6 19.2 90.8 25.2 Z" className={styles.hair} />
-            </g>
-          )}
-          {scene === 'join' && <path d="M106 37 q3.2 5 0 7.4 q-3.2 -2.4 0 -7.4 z" className={styles.sweat} />}
-          {scene === 'build' && <FaProp icon={faHelmetSafety} x={67} y={7} size={40} className={styles.helmet} />}
+          <path d="M66 50 C64 36 73 27 85 27 C98 27 106 36 105 50 C105 56 103 61 100 64 L99 50 L70 50 L69 63 C67 59 66 55 66 50 Z" className={styles.hairBack} />
+          <ellipse cx="69.6" cy="55" rx="3.2" ry="4.2" className={styles.skin} />
+          <ellipse cx="69.8" cy="55.2" rx="1.3" ry="2.3" className={styles.skinShade} />
+          <path d="M70 46 C70 37 76.5 32 85 32 C94 32 100.5 37.5 100.5 47 C100.5 57 97.5 64.5 92.5 68.5 C89.6 70.8 86.6 71.6 84 71 C77.5 69.6 72.2 64 70.8 56 C70.3 53 70 49.5 70 46 Z" className={styles.skin} />
+          <path d="M70 47 C74 44 80 42.5 86 42.6 C92 42.5 97 43.6 100.4 46 L100.5 43 C97 39.6 91 38.4 85 38.4 C78 38.4 73 40.4 70 44 Z" className={styles.faceShade} />
+          <Face scene={scene} />
+          {/* swept fringe, sideburn, soft shine */}
+          <path d="M68 47 C66.6 35 75 27.6 86 27.4 C97.6 27.2 105 35 104.2 46.6 C101.6 42.6 98 40.6 94 40 C95 42.6 94.6 44.8 93.2 46.4 C91.4 42.6 87.6 40.2 82.6 39.8 C79.6 41.4 76.6 42 73 41.6 C71.8 43.4 70.4 45.4 68 47 Z" className={styles.hair} />
+          <path d="M69.5 45.6 C68.6 50 68.6 54 69.8 57.8 C70.6 54 71 50 71.6 47 Z" className={styles.hair} />
+          <path d="M78 31.6 C83 29.6 89 29.6 94.4 31.8 C90 31.4 85.6 31.6 81.4 33 Z" className={styles.hairShine} />
+          {scene === 'join' && <path d="M104 38 q3 4.8 0 7.2 q-3 -2.4 0 -7.2 z" className={styles.sweat} />}
+          {scene === 'build' && <FaProp icon={faHelmetSafety} x={63} y={8} size={42} className={styles.helmet} />}
           {scene === 'archive' && (
             <g>
-              <rect x="74" y="27" width="24" height="8" rx="1.5" className={styles.cap} />
-              <path d="M60 28 L86 19.5 L112 28 L86 36.5 Z" className={styles.cap} />
+              <rect x="74" y="29.5" width="22" height="8" rx="1.5" className={styles.cap} />
+              <path d="M62 30 L85 22.5 L108 30 L85 37.5 Z" className={styles.cap} />
               <g className={cn(styles.rig, styles.tassel)}>
-                <path d="M86 28 L106 31.5 V43" className={styles.tasselLine} />
-                <circle cx="106" cy="44.8" r="2.4" className={styles.tasselEnd} />
+                <path d="M85 30 L104 33 V43" className={styles.tasselLine} />
+                <circle cx="104" cy="45" r="2.3" className={styles.tasselEnd} />
               </g>
             </g>
           )}
@@ -324,7 +269,6 @@ function CodeProps() {
       {/* wall poster + code glyph floating out of the laptop */}
       <rect x="186" y="16" width="40" height="34" rx="3" className={styles.poster} />
       <FaProp icon={faDatabase} x={198} y={22} size={22} className={styles.posterIcon} />
-      <FaProp icon={faCode} x={134} y={46} size={18} className={styles.floatCode} />
     </g>
   );
 }
@@ -358,7 +302,6 @@ function CleanseProps() {
       ))}
       <FaProp icon={faBroom} x={194} y={138} size={44} className={styles.broom} />
       <FaProp icon={faBucket} x={186} y={162} size={22} className={styles.bucket} />
-      <FaProp icon={faSprayCanSparkles} x={44} y={169} size={15} className={styles.spray} />
       {/* suds */}
       {[
         [118, 128, 3],
@@ -397,8 +340,6 @@ function JoinProps() {
         <circle key={`${x}${y}`} cx={x} cy={y} r="1.6" className={styles.bolt} />
       ))}
       <FaProp icon={faToolbox} x={196} y={160} size={24} className={styles.toolbox} />
-      <rect x="204" y="132" width="22" height="20" rx="3" className={styles.poster} />
-      <FaProp icon={faCodeMerge} x={208.5} y={135} size={14} className={styles.posterIcon} />
       <text x="160" y="30" className={styles.label}>claims</text>
       <text x="160" y="176" className={styles.label}>members</text>
       <text x="196" y="106" className={styles.label}>joined</text>
@@ -424,7 +365,6 @@ function BuildProps() {
         <rect x="146" y="112" width="44" height="24" rx="4" className={styles.tone_ok} />
         <text x="168" y="127.5" className={styles.blockText}>DQ</text>
       </g>
-      <FaProp icon={faWrench} x={202} y={174} size={14} className={styles.wrenchFa} />
       <g className={styles.sparks}>
         {[-60, -20, 20, 60].map((a) => (
           <line key={a} x1="168" y1="104" x2="168" y2="96" transform={`rotate(${a} 168 110)`} className={styles.sparkLine} />
@@ -449,7 +389,6 @@ function IndexProps() {
         <rect x="180" y="130" width="16" height="4" rx="2" className={styles.propDark} />
       </g>
       <FaProp icon={faFolderOpen} x={174} y={64} size={18} className={styles.folder} />
-      <FaProp icon={faMagnifyingGlass} x={206} y={36} size={16} className={styles.magnifier} />
     </g>
   );
 }
@@ -503,8 +442,6 @@ function ServeProps() {
         />
       ))}
       <FaProp icon={faPaperPlane} x={14} y={22} size={18} className={styles.plane} />
-      <FaProp icon={faEnvelope} x={206} y={62} size={16} className={styles.envelope} />
-      <FaProp icon={faHeart} x={222} y={14} size={10} className={styles.heart} />
       <rect x="122" y="99" width="40" height="4" rx="2" className={styles.propDark} />
       <g className={styles.served}>
         <Packet x={133} y={80} s={18} tone="ok" />

@@ -3,6 +3,8 @@ import { Section } from '@/components/layout/Section';
 import { Reveal, RevealItem } from '@/components/ui/Reveal';
 import { SpotlightCard } from '@/components/ui/SpotlightCard';
 import { ScrambleText } from '@/components/ui/ScrambleText';
+import { scenes } from '@/data/scenes';
+import { SceneBanner } from '@/components/scene/SceneBanner';
 import styles from './About.module.css';
 
 const fn = ['own()', 'validate()', 'ship()'];
@@ -10,6 +12,16 @@ const fn = ['own()', 'validate()', 'ship()'];
 export function About() {
   return (
     <Section id="about" title="Ownership from requirements to daily operations." accent={['operations.']}>
+      <Reveal>
+        <SceneBanner
+          scene={scenes.cafe}
+          eyebrow="Off the clock"
+          line="Usually at a café, thinking about why a pipeline did what it did."
+          focus="60% 30%"
+          focusMobile="66% 25%"
+        />
+      </Reveal>
+
       <div className={styles.grid}>
         <div className={styles.summary}>
           <ScrambleText text={profile.summary[0]} className={styles.lead} />

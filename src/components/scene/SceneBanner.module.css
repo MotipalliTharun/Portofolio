@@ -1,0 +1,32 @@
+.banner {
+  height: clamp(300px, 38vw, 500px);
+  margin-bottom: clamp(32px, 5vw, 56px);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  color: #fbf4ea;
+  /* rounded corners also need the fade to stop melting into the page */
+  --bg: transparent;
+}
+.caption {
+  display: grid;
+  align-content: end;
+  gap: 8px;
+  height: 100%;
+  max-width: min(420px, 46%);
+  padding: clamp(20px, 3.5vw, 40px);
+}
+.eyebrow {
+  font: 500 11px var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #f2c48d;
+}
+.line {
+  font: 700 clamp(1.5rem, 1rem + 1.8vw, 2.4rem) / 1.1 var(--font-display);
+  letter-spacing: -0.03em;
+  text-shadow: 0 2px 24px rgb(20 12 6 / 0.4);
+}
+@media (max-width: 600px) {
+  .banner { height: 380px; }
+  .caption { max-width: 100%; }
+}

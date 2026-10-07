@@ -12,6 +12,7 @@ import { Projects } from '@/sections/Projects';
 import { Skills } from '@/sections/Skills';
 import { Education } from '@/sections/Education';
 import { Contact } from '@/sections/Contact';
+import { TimeLapse } from '@/sections/TimeLapse';
 import { useModHotkey } from '@/hooks/useHotkey';
 
 const CommandPalette = lazy(() => import('@/components/layout/CommandPalette'));
@@ -47,6 +48,7 @@ function Shell() {
         <Hero />
         <About />
         <Experience />
+        <TimeLapse />
         <Projects />
         <Skills />
         <Education />

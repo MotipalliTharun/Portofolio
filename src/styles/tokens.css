@@ -19,21 +19,21 @@
   --tint-c: 0.02;
   --accink-l: 0.99;
   /* color: light */
-  --bg: #f2f5f6;
-  --bg-elev: #ffffff;
-  --bg-sunk: #e8edef;
-  --ink: #10202a;
-  --ink-2: #3c4d58;
-  --muted: #5d6e79;
-  --line: #d5dde1;
-  --line-strong: #b9c6cc;
+  --bg: #f7f1e8;
+  --bg-elev: #fffcf7;
+  --bg-sunk: #eee5d8;
+  --ink: #1b2236;
+  --ink-2: #464c5c;
+  --muted: #6c6a6c;
+  --line: #e6dccd;
+  --line-strong: #cfbfaa;
   --run: #a35f00;
   --run-soft: #fbecd4;
   --ok: #1b7448;
   --ok-soft: #d8f0e2;
   --raw: #8a98a1;
-  --shadow: 0 1px 2px rgba(16, 32, 42, 0.06), 0 12px 32px -16px rgba(16, 32, 42, 0.22);
-  --shadow-lg: 0 30px 80px -30px rgba(16, 32, 42, 0.45);
+  --shadow: 0 1px 2px rgba(60, 40, 20, 0.06), 0 14px 34px -16px rgba(60, 40, 20, 0.25);
+  --shadow-lg: 0 30px 80px -30px rgba(60, 40, 20, 0.45);
 
   /* type */
   --font-display: 'Bricolage Grotesque Variable', 'Helvetica Neue', Arial, sans-serif;
@@ -66,14 +66,14 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --bg: #0b1215;
-    --bg-elev: #121c21;
-    --bg-sunk: #0e171b;
-    --ink: #e3ebee;
-    --ink-2: #b8c6cc;
-    --muted: #8fa1aa;
-    --line: #213038;
-    --line-strong: #31444d;
+    --bg: #13110f;
+    --bg-elev: #1c1916;
+    --bg-sunk: #171412;
+    --ink: #f2ebe2;
+    --ink-2: #cbc1b5;
+    --muted: #9d9286;
+    --line: #2e2823;
+    --line-strong: #443b33;
     --acc-l: 0.8;
     --acc-c: 0.1;
     --soft-l: 0.3;
@@ -93,14 +93,14 @@
 }
 
 :root[data-theme='dark'] {
-  --bg: #0b1215;
-  --bg-elev: #121c21;
-  --bg-sunk: #0e171b;
-  --ink: #e3ebee;
-  --ink-2: #b8c6cc;
-  --muted: #8fa1aa;
-  --line: #213038;
-  --line-strong: #31444d;
+  --bg: #13110f;
+  --bg-elev: #1c1916;
+  --bg-sunk: #171412;
+  --ink: #f2ebe2;
+  --ink-2: #cbc1b5;
+  --muted: #9d9286;
+  --line: #2e2823;
+  --line-strong: #443b33;
   --acc-l: 0.8;
   --acc-c: 0.1;
   --soft-l: 0.3;
@@ -116,41 +116,6 @@
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -16px rgba(0, 0, 0, 0.6);
   --shadow-lg: 0 30px 80px -30px rgba(0, 0, 0, 0.8);
   color-scheme: dark;
-}
-
-/* Character + prop colors (illustrations) */
-:root {
-  --char-skin: #f8cfb3;
-  --char-skin-shade: #eeaf8d;
-  --char-hair: #2b2a30;
-  --char-hair-shade: #1f1e23;
-  --char-hair-shine: #4a4952;
-  --char-top: #2f3036;
-  --char-top-shade: #222328;
-  --char-top-cuff: #45464f;
-  --char-pants: #4a5068;
-  --prop: var(--line-strong);
-  --prop-dark: #26343d;
-  --paper: #ffffff;
-  --screen: #0f1c22;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    --char-pants: #5a6280;
-    --char-top: #3a3b43;
-    --char-top-shade: #2c2d33;
-    --prop-dark: #3a4c56;
-    --paper: #e6eef0;
-    --screen: #071014;
-  }
-}
-:root[data-theme='dark'] {
-  --char-pants: #5a6280;
-  --char-top: #3a3b43;
-  --char-top-shade: #2c2d33;
-  --prop-dark: #3a4c56;
-  --paper: #e6eef0;
-  --screen: #071014;
 }
 
 /* Derived accent palette. Redeclared on every [data-hue] element so each section

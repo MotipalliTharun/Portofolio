@@ -8,6 +8,8 @@ import { StatusPill } from '@/components/ui/StatusPill';
 import { useNow } from '@/hooks/useNow';
 import { useUI } from '@/providers/UIProvider';
 import { usePdfAvailable } from '@/hooks/usePdfAvailable';
+import { scenes } from '@/data/scenes';
+import { SceneBanner } from '@/components/scene/SceneBanner';
 import styles from './Contact.module.css';
 
 export function Contact() {
@@ -40,6 +42,10 @@ export function Contact() {
       accent={['reliable.']}
       intro="I’m open to data engineering roles and happy to talk pipelines, lakehouses or data quality. The fastest way to reach me is email."
     >
+      <Reveal>
+        <SceneBanner scene={scenes.workspace} eyebrow="Coffee’s on me" line="Pull up a chair. Tell me about your data." focus="50% 60%" focusMobile="40% 55%" />
+      </Reveal>
+
       <div className={styles.grid}>
         <Reveal className={styles.channels} variant="slide">
           <StatusPill status="running" label={profile.availability} />

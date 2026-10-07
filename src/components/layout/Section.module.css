@@ -19,8 +19,6 @@
 }
 .header {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 400px);
-  align-items: end;
   gap: clamp(28px, 5vw, 64px);
   margin-top: clamp(40px, 6vw, 72px);
   margin-bottom: clamp(36px, 6vw, 64px);
@@ -41,14 +39,6 @@
   color: var(--muted);
   font-size: var(--text-lg);
 }
-.scene { width: 100%; }
-
-@media (max-width: 860px) {
-  .header { grid-template-columns: minmax(0, 1fr); align-items: start; gap: 24px; }
-  .scene { max-width: 420px; }
-}
-/* phones: the scene is a supporting illustration, not the first screen */
 @media (max-width: 600px) {
   .header { margin-top: 28px; margin-bottom: 32px; }
-  .scene { max-width: 300px; justify-self: center; }
 }

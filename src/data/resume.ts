@@ -2,8 +2,6 @@
 
 export type StageId = 'hero' | 'about' | 'experience' | 'projects' | 'skills' | 'education' | 'contact';
 
-export type SceneId = 'code' | 'cleanse' | 'join' | 'build' | 'index' | 'archive' | 'serve';
-
 export interface Stage {
   id: StageId;
   index: string;
@@ -13,18 +11,16 @@ export interface Stage {
   bitSays: string;
   /** OKLCH hue for this section's palette. */
   hue: number;
-  /** What the engineer is doing in this section's scene. */
-  scene: SceneId;
 }
 
 export const stages: Stage[] = [
-  { id: 'hero', index: '00', stage: 'ingest', nav: 'Home', bitSays: 'ingesting…', hue: 222, scene: 'code' },
-  { id: 'about', index: '01', stage: 'cleanse', nav: 'About', bitSays: 'cleaning…', hue: 192, scene: 'cleanse' },
-  { id: 'experience', index: '02', stage: 'join', nav: 'Experience', bitSays: 'joining…', hue: 258, scene: 'join' },
-  { id: 'projects', index: '03', stage: 'build', nav: 'Projects', bitSays: 'building…', hue: 292, scene: 'build' },
-  { id: 'skills', index: '04', stage: 'index', nav: 'Skills', bitSays: 'indexing…', hue: 160, scene: 'index' },
-  { id: 'education', index: '05', stage: 'archive', nav: 'Education', bitSays: 'archiving…', hue: 38, scene: 'archive' },
-  { id: 'contact', index: '06', stage: 'serve', nav: 'Contact', bitSays: 'served ✓', hue: 345, scene: 'serve' },
+  { id: 'hero', index: '00', stage: 'ingest', nav: 'Home', bitSays: 'ingesting…', hue: 255 },
+  { id: 'about', index: '01', stage: 'cleanse', nav: 'About', bitSays: 'cleaning…', hue: 45 },
+  { id: 'experience', index: '02', stage: 'join', nav: 'Experience', bitSays: 'joining…', hue: 255 },
+  { id: 'projects', index: '03', stage: 'build', nav: 'Projects', bitSays: 'building…', hue: 30 },
+  { id: 'skills', index: '04', stage: 'index', nav: 'Skills', bitSays: 'indexing…', hue: 150 },
+  { id: 'education', index: '05', stage: 'archive', nav: 'Education', bitSays: 'archiving…', hue: 75 },
+  { id: 'contact', index: '06', stage: 'serve', nav: 'Contact', bitSays: 'served ✓', hue: 45 },
 ];
 
 export const stageById = (id: StageId): Stage => stages.find((s) => s.id === id)!;
@@ -42,8 +38,6 @@ export const profile = {
   availability: 'Open to data engineering roles',
   /** Drop the PDF at public/Tharun_Motipalli_Resume.pdf and the résumé buttons appear. */
   resume: `${import.meta.env.BASE_URL}Tharun_Motipalli_Resume.pdf`,
-  /** Drop a square photo at public/portrait.jpg and it appears in the hero. */
-  portrait: `${import.meta.env.BASE_URL}portrait.jpg`,
   rotatingRoles: ['lakehouse pipelines', 'data quality systems', 'REST APIs', 'Airflow workflows'],
   summary: [
     'I’m a software and data engineer with production experience across healthcare (Cigna), pharmaceutical manufacturing (Johnson & Johnson) and UK energy tech (clearVUE).',

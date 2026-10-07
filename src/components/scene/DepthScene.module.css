@@ -1,0 +1,56 @@
+.scene {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #1b1612;
+  /* layers are scaled up a touch so parallax never shows an edge */
+  --overscan: 1.07;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.layer {
+  object-fit: cover;
+  object-position: var(--focus);
+  scale: var(--overscan);
+  max-width: none;
+}
+.bg { z-index: 0; }
+
+/* golden-hour shade so type stays legible over the photo */
+.shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgb(18 13 10 / 0.62) 0%, rgb(18 13 10 / 0.3) 42%, rgb(18 13 10 / 0) 70%),
+    linear-gradient(180deg, rgb(18 13 10 / 0.35) 0%, rgb(18 13 10 / 0) 30%);
+  pointer-events: none;
+}
+.fg { z-index: 3; }
+
+/* melt the bottom of the scene into the page */
+.fade {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 4;
+  height: 28%;
+  background: linear-gradient(180deg, transparent, var(--bg));
+  pointer-events: none;
+}
+.content {
+  position: relative;
+  z-index: 5;
+  height: 100%;
+}
+
+@media (max-width: 760px) {
+  .layer { object-position: var(--focus-mobile); }
+  .shade {
+    background: linear-gradient(180deg, rgb(18 13 10 / 0.55) 0%, rgb(18 13 10 / 0.15) 40%, rgb(18 13 10 / 0.45) 75%, rgb(18 13 10 / 0.6) 100%);
+  }
+}

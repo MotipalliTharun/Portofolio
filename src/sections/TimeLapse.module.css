@@ -1,0 +1,120 @@
+/* tall track; the stage pins while you scroll through it */
+.timelapse {
+  position: relative;
+  height: 260vh;
+}
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  background: #0f0d0c;
+  color: #fbf4ea;
+}
+.frame {
+  position: absolute;
+  inset: 0;
+}
+.img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: 58% 40%;
+}
+.shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgb(12 9 8 / 0.7) 0%, rgb(12 9 8 / 0.35) 40%, rgb(12 9 8 / 0) 65%),
+    linear-gradient(180deg, var(--bg) 0%, transparent 6%, transparent 92%, var(--bg) 100%);
+  pointer-events: none;
+}
+
+.overlay {
+  position: relative;
+  height: 100%;
+}
+.clock {
+  position: absolute;
+  top: calc(var(--nav-h) + 28px);
+  left: var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font: 500 clamp(1.4rem, 1rem + 1.4vw, 2.2rem) var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+/* a little sun/moon dial that turns with the clock */
+.dial {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid rgb(251 244 234 / 0.35);
+}
+.dial::before,
+.dial::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  border-radius: 50%;
+}
+.dial::before { top: -5px; background: #f6c27a; box-shadow: 0 0 12px #f6c27a; }
+.dial::after { bottom: -5px; background: #cfd8ff; box-shadow: 0 0 12px #9fb1ff; }
+.time { min-width: 7.5ch; }
+
+.beat {
+  position: absolute;
+  left: var(--gutter);
+  bottom: clamp(80px, 16vh, 160px);
+  display: grid;
+  gap: 12px;
+  max-width: min(460px, calc(100% - var(--gutter) * 2));
+}
+.eyebrow {
+  font: 500 11px var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #f2c48d;
+}
+.title {
+  font-size: var(--text-2xl);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  text-shadow: 0 2px 24px rgb(0 0 0 / 0.4);
+}
+.body {
+  color: rgb(251 244 234 / 0.82);
+  font-size: var(--text-lg);
+}
+
+.track {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: 40px;
+  height: 2px;
+  border-radius: 2px;
+  background: rgb(251 244 234 / 0.18);
+  overflow: hidden;
+}
+.fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #f6c27a, #9fb1ff);
+}
+
+@media (max-width: 760px) {
+  .img { object-position: 64% 40%; }
+  .shade {
+    background:
+      linear-gradient(180deg, var(--bg) 0%, rgb(12 9 8 / 0.25) 14%, rgb(12 9 8 / 0.1) 45%, rgb(12 9 8 / 0.75) 80%, var(--bg) 100%);
+  }
+}

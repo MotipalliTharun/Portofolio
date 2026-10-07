@@ -228,7 +228,8 @@
   .intro { justify-content: space-between; padding-bottom: 72px; gap: 16px; }
   .name { font-size: clamp(3rem, 15vw, 5rem); margin-top: 16px; }
   .panel { padding: 16px; gap: 12px; }
-  .meta { display: none; } /* About repeats it; keeps the panel clear of the scroll cue */
+  .meta { display: none; } /* About repeats it */
+  .cue { display: none; } /* the panel fills the bottom; the clip itself invites the scroll */
   .lede { font-size: var(--text-lg); }
   .bubble { left: max(8%, calc((100% - 100cqw) * var(--fx) + 16px)); top: 15%; }
 }

@@ -4,7 +4,7 @@ import { stages } from '@/data/resume';
 import { Bit } from '@/character/Bit';
 import { moodForStage } from '@/character/mood';
 import { useUI } from '@/providers/UIProvider';
-import { useScrollTo } from '@/providers/SmoothScroll';
+import { useSlashTo } from '@/providers/SlashTransition';
 import { cn } from '@/lib/cn';
 import styles from './PipelineRail.module.css';
 
@@ -16,7 +16,7 @@ const SPRING = { type: 'spring', stiffness: 120, damping: 20 } as const;
  */
 export function PipelineRail() {
   const { stage } = useUI();
-  const scrollTo = useScrollTo();
+  const slashTo = useSlashTo();
   const index = Math.max(0, stages.findIndex((s) => s.id === stage));
   const pct = (index / (stages.length - 1)) * 100;
   const [talking, setTalking] = useState(false);
@@ -42,7 +42,7 @@ export function PipelineRail() {
                 <button
                   type="button"
                   className={cn(styles.node, styles[state])}
-                  onClick={() => scrollTo(`#${s.id}`)}
+                  onClick={() => slashTo(s.id)}
                   aria-label={`Go to ${s.nav} (${s.index} ${s.stage})`}
                   aria-current={state === 'current' ? 'step' : undefined}
                 >

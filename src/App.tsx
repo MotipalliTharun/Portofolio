@@ -2,6 +2,7 @@ import { lazy, Suspense, useCallback, useEffect, useState } from 'react';
 import { MotionConfig } from 'motion/react';
 import { SmoothScroll } from '@/providers/SmoothScroll';
 import { UIProvider, useUI } from '@/providers/UIProvider';
+import { SlashTransition } from '@/providers/SlashTransition';
 import { Nav } from '@/components/layout/Nav';
 import { PipelineRail } from '@/components/layout/PipelineRail';
 import { Footer } from '@/components/layout/Footer';
@@ -65,7 +66,9 @@ export default function App() {
     <MotionConfig reducedMotion="user">
       <SmoothScroll>
         <UIProvider>
-          <Shell />
+          <SlashTransition>
+            <Shell />
+          </SlashTransition>
         </UIProvider>
       </SmoothScroll>
     </MotionConfig>

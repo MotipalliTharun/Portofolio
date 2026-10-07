@@ -1,0 +1,36 @@
+.layer {
+  position: fixed;
+  inset: 0;
+  z-index: 85;
+  pointer-events: none;
+}
+.edge,
+.panel {
+  position: absolute;
+  inset: 0;
+}
+/* the cutting edge: steel catching the section's hue */
+.edge {
+  background: linear-gradient(100deg, #fff8ec, var(--accent) 60%, #fff8ec);
+}
+.panel {
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(60% 50% at 50% 50%, color-mix(in oklch, var(--accent) 22%, transparent), transparent 70%),
+    #0e0c0b;
+  color: #f4efe8;
+}
+.card {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin: 0;
+  font: 800 clamp(2.6rem, 1.4rem + 5vw, 5.5rem) / 1 var(--font-display);
+  letter-spacing: -0.045em;
+}
+.index {
+  font: 500 var(--text-sm) var(--font-mono);
+  letter-spacing: 0.12em;
+  color: var(--accent);
+}

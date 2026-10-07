@@ -2,6 +2,8 @@ import type { CSSProperties, MouseEvent } from 'react';
 import { experience, profile, stages } from '@/data/resume';
 import { stickerCredit } from '@/data/stickers';
 import { useScrollTo } from '@/providers/SmoothScroll';
+import { useSlashTo } from '@/providers/SlashTransition';
+import type { StageId } from '@/data/resume';
 import { useNow } from '@/hooks/useNow';
 import { usePdfAvailable } from '@/hooks/usePdfAvailable';
 import styles from './Footer.module.css';
@@ -16,13 +18,14 @@ const explore = stages.filter((s) => s.id !== 'hero');
  */
 export function Footer() {
   const scrollTo = useScrollTo();
+  const slashTo = useSlashTo();
   const now = useNow(30_000);
   const hasResume = usePdfAvailable(profile.resume);
   const time = now.toLocaleTimeString('en-US', { timeZone: profile.timezone, hour: 'numeric', minute: '2-digit' });
 
-  const go = (e: MouseEvent, id: string) => {
+  const go = (e: MouseEvent, id: StageId) => {
     e.preventDefault();
-    scrollTo(`#${id}`);
+    slashTo(id);
   };
 
   return (

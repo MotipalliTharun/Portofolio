@@ -1,4 +1,4 @@
-import type { Transition, Variants } from 'motion/react';
+import type { Transition, Variants } from 'framer-motion';
 
 /** One easing curve for the whole site: fast out, long settle. */
 export const ease = [0.22, 1, 0.36, 1] as const;
@@ -10,7 +10,20 @@ export const spring = {
   snappy: { type: 'spring', stiffness: 420, damping: 32 } as Transition,
   soft: { type: 'spring', stiffness: 120, damping: 20 } as Transition,
   bouncy: { type: 'spring', stiffness: 260, damping: 14 } as Transition,
+  /** hover lift and press: quick, no wobble, interruptible */
+  touch: { type: 'spring', stiffness: 500, damping: 30, mass: 0.6 } as Transition,
+  /** shared-element morphs (card → drawer) */
+  morph: { type: 'spring', stiffness: 300, damping: 34 } as Transition,
 };
+
+/** Exits run at ~65% of their entrance so dismissals feel responsive. */
+export const exitOf = (duration: number) => Math.round(duration * 0.65 * 1000) / 1000;
+
+/** Gap between list items entering: 30-50 ms reads as one gesture, not a queue. */
+export const stagger = { tight: 0.035, base: 0.05 } as const;
+
+/** Physical feedback for tappable cards. */
+export const touch = { hover: { y: -4 }, press: { scale: 0.98 } } as const;
 
 /**
  * Reveal variants. Each section picks the one that matches its stage so entrances

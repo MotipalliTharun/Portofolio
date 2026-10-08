@@ -1,4 +1,4 @@
-import { useInView, useReducedMotion } from 'motion/react';
+import { useInView, useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState, type ElementType } from 'react';
 import styles from './ScrambleText.module.css';
 

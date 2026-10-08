@@ -1,4 +1,4 @@
-import { useReducedMotion, type MotionValue } from 'motion/react';
+import { useReducedMotion, type MotionValue } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 
 interface FrameSequenceProps {
@@ -17,6 +17,8 @@ interface FrameSequenceProps {
   end?: number;
   /** once the scrub is done, ping-pong between these frames (e.g. a wave) */
   hold?: [number, number];
+  /** show this one frame and ignore scroll (reduced motion) */
+  still?: number;
   label: string;
   className?: string;
 }
@@ -33,7 +35,7 @@ const smooth = (a: number, b: number, v: number) => {
  * and drawn to a canvas, with scroll progress choosing the frame. The canvas is
  * sized by CSS (it fills its box) and redraws only when the frame changes.
  */
-export function FrameSequence({ dir, count, progress, range, idleEnd = 0, handover = 0.1, end = count - 1, hold, label, className }: FrameSequenceProps) {
+export function FrameSequence({ dir, count, progress, range, idleEnd = 0, handover = 0.1, end = count - 1, hold, still, label, className }: FrameSequenceProps) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const reduce = useReducedMotion();
 
@@ -46,11 +48,13 @@ export function FrameSequence({ dir, count, progress, range, idleEnd = 0, handov
     let drawn = -1;
     let dirty = true;
 
-    // first frame first, then the rest in order, a few at a time
+    // in order, a few at a time; a still needs only its one frame
+    const order = still === undefined ? [...Array(count).keys()] : [still];
     let next = 0;
+    let sized = false;
     const loadNext = () => {
-      if (!alive || next >= count) return;
-      const i = next++;
+      if (!alive || next >= order.length) return;
+      const i = order[next++];
       const img = new Image();
       img.src = `${dir}/f${pad(i)}.webp`;
       img
@@ -58,7 +62,10 @@ export function FrameSequence({ dir, count, progress, range, idleEnd = 0, handov
         .then(() => {
           if (!alive) return;
           frames[i] = img;
-          if (i === 0) resize(); // now we know the source width
+          if (!sized) {
+            sized = true;
+            resize(); // first frame in: now we know the source width
+          }
           dirty = true;
         })
         .catch(() => {})
@@ -103,9 +110,9 @@ export function FrameSequence({ dir, count, progress, range, idleEnd = 0, handov
         return from + (phase < span ? phase : span * 2 - phase);
       };
       const scrub = smooth(range[0], range[1], p) * end;
-      let f = scrub;
-      if (idleEnd > 0 && !reduce) f = pingpong(0, idleEnd) + (scrub - pingpong(0, idleEnd)) * smooth(0, handover, p);
-      if (hold && !reduce) f += (pingpong(hold[0], hold[1]) - f) * smooth(range[1], range[1] + 0.03, p);
+      let f = still ?? scrub;
+      if (still === undefined && idleEnd > 0 && !reduce) f = pingpong(0, idleEnd) + (scrub - pingpong(0, idleEnd)) * smooth(0, handover, p);
+      if (still === undefined && hold && !reduce) f += (pingpong(hold[0], hold[1]) - f) * smooth(range[1], range[1] + 0.03, p);
       const i = nearest(Math.round(f));
       if (i < 0 || (i === drawn && !dirty)) return;
       ctx.drawImage(frames[i]!, 0, 0, c.width, c.height);
@@ -120,7 +127,7 @@ export function FrameSequence({ dir, count, progress, range, idleEnd = 0, handov
       ro.disconnect();
       io.disconnect();
     };
-  }, [dir, count, progress, range, idleEnd, handover, end, hold, reduce]);
+  }, [dir, count, progress, range, idleEnd, handover, end, hold, still, reduce]);
 
   return <canvas ref={canvas} className={className} role="img" aria-label={label} />;
 }

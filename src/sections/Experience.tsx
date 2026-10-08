@@ -1,4 +1,4 @@
-import { AnimatePresence, motion, useScroll, useSpring } from 'motion/react';
+import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { experience, type Experience as Role } from '@/data/resume';
 import { Section } from '@/components/layout/Section';

@@ -4,6 +4,8 @@ import { FlowDiagram } from '@/components/ui/FlowDiagram';
 import { ChipList } from '@/components/ui/Chip';
 import { useUI } from '@/providers/UIProvider';
 import { useCallback, useRef } from 'react';
+import { motion } from 'framer-motion';
+import { spring } from '@/lib/motion';
 import { projectArt } from '@/data/stickers';
 import { projectPhotos } from '@/data/photos';
 import styles from './ProjectDrawer.module.css';
@@ -16,18 +18,23 @@ export default function ProjectDrawer() {
   const found = projects.find((p) => p.id === openProjectId);
   if (found) last.current = found;
   const project = last.current;
+  // only the project opened from its card morphs; "Next project" just swaps content
+  const openedFrom = useRef<string | null>(null);
+  if (!found) openedFrom.current = null;
+  else if (openedFrom.current === null) openedFrom.current = found.id;
+  const morph = project.id === openedFrom.current;
   const index = projects.indexOf(project);
   const close = useCallback(() => openProject(null), [openProject]);
   const next = projects[(index + 1) % projects.length];
 
   return (
-    <Drawer open={!!found} onClose={close} labelledBy="case-title">
+    <Drawer open={!!found} onClose={close} labelledBy="case-title" entrance="fade">
       {(
         <article key={project.id} className={styles.article}>
-          <div className={styles.cover}>
+          <motion.div className={styles.cover} layoutId={morph ? `cover-${project.id}` : undefined} transition={spring.morph}>
             <img src={projectPhotos[project.id]} alt="" width="1100" height="619" className={styles.photo} />
             <img src={projectArt[project.id]} alt="" width="72" height="72" className={styles.art} />
-          </div>
+          </motion.div>
           <p className={styles.kind}>case study · {project.kind}</p>
           <h2 id="case-title" className={styles.title}>{project.title}</h2>
           <p className={styles.summary}>{project.summary}</p>

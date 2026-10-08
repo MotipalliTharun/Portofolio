@@ -1,4 +1,4 @@
-import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
+import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { experience, profile, stageById, ticker } from '@/data/resume';
@@ -10,6 +10,7 @@ import { useScrollTo } from '@/providers/SmoothScroll';
 import { useNow } from '@/hooks/useNow';
 import { usePdfAvailable } from '@/hooks/usePdfAvailable';
 import { ease as EASE } from '@/lib/motion';
+import { cn } from '@/lib/cn';
 import styles from './Hero.module.css';
 
 const current = experience.find((e) => !e.end)!;
@@ -55,6 +56,13 @@ export function Hero() {
   const outroY = useTransform(scrollYProgress, [0.66, 0.76], [reduce ? 0 : 24, 0]);
   const cueOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0]);
   const zoom = useTransform(scrollYProgress, [0, 0.72], [1, reduce ? 1 : 1.06]);
+  // reduced motion: no pin, no scrub. One readable frame (him waving) with all copy visible.
+  const still = !!reduce;
+  // the 👋 waves along with him the first time he waves, then rests
+  const [greeted, setGreeted] = useState(false);
+  useMotionValueEvent(scrollYProgress, 'change', (p) => {
+    if (p > 0.62 && !greeted) setGreeted(true);
+  });
 
   useEffect(() => {
     if (reduce) return;
@@ -69,7 +77,7 @@ export function Hero() {
       <section
         id="hero"
         ref={ref}
-        className={styles.hero}
+        className={cn(styles.hero, still && styles.still)}
         aria-labelledby="hero-title"
         tabIndex={-1}
         data-hue
@@ -78,7 +86,7 @@ export function Hero() {
         <div className={styles.stage}>
           {/* the frame box covers the stage like object-fit: cover, so overlays can be
               pinned to spots in the video (his hand) whatever the screen shape */}
-          <motion.div className={styles.frameBox} style={{ scale: zoom }}>
+          <motion.div className={styles.frameBox} style={still ? undefined : { scale: zoom }}>
             <FrameSequence
               className={styles.canvas}
               dir={frameDir(phone)}
@@ -88,15 +96,16 @@ export function Hero() {
               idleEnd={IDLE_END}
               end={WAVE_PEAK}
               hold={WAVE}
+            still={still ? WAVE_PEAK : undefined}
               label="Animated Tharun typing at his desk at night, then looking up and waving."
             />
-            <motion.p className={styles.bubble} style={{ opacity: hiOpacity, scale: hiScale }} aria-hidden="true">
-              Hi, I’m {profile.firstName} <span className={styles.wave}>👋</span>
+            <motion.p className={styles.bubble} style={still ? undefined : { opacity: hiOpacity, scale: hiScale }} aria-hidden="true">
+              Hi, I’m {profile.firstName} <span className={cn(styles.wave, greeted && !still && styles.waving)}>👋</span>
             </motion.p>
           </motion.div>
           <div className={styles.shade} aria-hidden="true" />
 
-          <motion.div className={`container ${styles.intro}`} style={{ opacity: introOpacity, y: introY }}>
+          <motion.div className={`container ${styles.intro}`} style={still ? undefined : { opacity: introOpacity, y: introY }}>
             <h1 id="hero-title" className={styles.name} aria-label={`${profile.name}, ${profile.title}`}>
               {[profile.firstName, profile.lastName].map((part, i) => (
                 <span key={part} className={styles.line} aria-hidden="true">
@@ -162,17 +171,19 @@ export function Hero() {
             </motion.div>
           </motion.div>
 
-          <motion.div className={`container ${styles.outro}`} style={{ opacity: outroOpacity, y: outroY }}>
-            <p className={styles.outroLine}>
-              {current.role} at {current.company}.<br />
-              <span>Pull up a chair, I’ll show you around.</span>
-            </p>
-            <Button variant="primary" onClick={() => scrollTo('#about')} icon="↓">
-              Start the tour
-            </Button>
-          </motion.div>
+          {!still && (
+            <motion.div className={`container ${styles.outro}`} style={{ opacity: outroOpacity, y: outroY }}>
+              <p className={styles.outroLine}>
+                {current.role} at {current.company}.<br />
+                <span>Pull up a chair, I’ll show you around.</span>
+              </p>
+              <Button variant="primary" onClick={() => scrollTo('#about')} icon="↓">
+                Start the tour
+              </Button>
+            </motion.div>
+          )}
 
-          <motion.button type="button" className={styles.cue} style={{ opacity: cueOpacity }} onClick={() => scrollTo('#about')}>
+          <motion.button type="button" className={styles.cue} style={{ opacity: still ? 1 : cueOpacity }} onClick={() => scrollTo('#about')}>
             <span className={styles.cueLine} aria-hidden="true" />
             scroll · he’s about to say hi
           </motion.button>

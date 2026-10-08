@@ -54,8 +54,9 @@
 .wave {
   display: inline-block;
   transform-origin: 70% 80%;
-  animation: wave 1.6s ease-in-out infinite;
 }
+/* plays with his first wave, three times, then rests */
+.waving { animation: wave 1.6s ease-in-out 3; }
 @keyframes wave {
   0%, 60%, 100% { rotate: 0deg; }
   10%, 30% { rotate: 16deg; }
@@ -237,5 +238,13 @@
   .meta { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .cueLine::after, .wave { animation: none; }
+  .cueLine::after, .waving { animation: none; }
 }
+
+/* reduced motion: a single readable screen instead of a pinned, scrubbed clip */
+.still { height: auto; }
+.still .stage { position: relative; }
+.still .intro { justify-content: flex-end; padding-bottom: clamp(48px, 10vh, 96px); }
+/* the waving frame already says hi; the bubble would sit on the name, and there is nothing to scroll-play */
+.still .bubble,
+.still .cue { display: none; }

@@ -1,7 +1,8 @@
-import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { experience } from '@/data/resume';
 import { scenes } from '@/data/scenes';
+import { cn } from '@/lib/cn';
 import styles from './TimeLapse.module.css';
 
 const current = experience.find((e) => !e.end)!;
@@ -38,12 +39,13 @@ export function TimeLapse() {
   const second = useTransform(scrollYProgress, [0.6, 0.72, 1], [0, 1, 1]);
   const bar = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
 
+  // reduced motion: no pin or dissolve; day and night side by side with both captions readable
   return (
-    <section ref={ref} className={styles.timelapse} aria-label="From the day job to side projects">
+    <section ref={ref} className={cn(styles.timelapse, reduce && styles.still)} aria-label="From the day job to side projects">
       <div className={styles.sticky}>
         <motion.div className={styles.frame} style={{ scale: zoom }}>
           <img className={styles.img} src={scenes.day.src} alt={scenes.day.alt} loading="lazy" decoding="async" />
-          <motion.img className={styles.img} src={scenes.night.src} alt={scenes.night.alt} style={{ opacity: night }} loading="lazy" decoding="async" />
+          <motion.img className={cn(styles.img, styles.nightImg)} src={scenes.night.src} alt={scenes.night.alt} style={reduce ? undefined : { opacity: night }} loading="lazy" decoding="async" />
         </motion.div>
         <div className={styles.shade} aria-hidden="true" />
 
@@ -54,7 +56,7 @@ export function TimeLapse() {
           </div>
 
           {beats.map((b, i) => (
-            <motion.div key={b.time} className={styles.beat} style={{ opacity: i === 0 ? first : second }}>
+            <motion.div key={b.time} className={cn(styles.beat, i === 1 && styles.beatNight)} style={reduce ? undefined : { opacity: i === 0 ? first : second }}>
               <span className={styles.eyebrow}>{b.time}</span>
               <h2 className={styles.title}>{b.title}</h2>
               <p className={styles.body}>{b.body}</p>

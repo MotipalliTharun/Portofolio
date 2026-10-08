@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion } from 'framer-motion';
 import type { ProjectTag, StageId } from '@/data/resume';
 import { stages } from '@/data/resume';
 import { useActiveSection } from '@/hooks/useActiveSection';

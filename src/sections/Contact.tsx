@@ -1,4 +1,5 @@
-import { useState, type FormEvent } from 'react';
+import { AnimatePresence, motion, useAnimationControls } from 'framer-motion';
+import { useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { profile } from '@/data/resume';
 import { Section } from '@/components/layout/Section';
 import { Reveal } from '@/components/ui/Reveal';
@@ -18,17 +19,26 @@ export function Contact() {
   const hasResume = usePdfAvailable(profile.resume);
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
+  // validate live only after the first attempt, so nobody is told off mid-sentence
+  const [tried, setTried] = useState(false);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const messageRef = useRef<HTMLTextAreaElement>(null);
+  const nameShake = useAnimationControls();
+  const messageShake = useAnimationControls();
+  const errors = validate(name, message);
 
   const time = now.toLocaleTimeString('en-US', { timeZone: profile.timezone, hour: 'numeric', minute: '2-digit' });
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || message.trim().length < 10) {
-      setError('Add your name and a message of at least 10 characters.');
+    setTried(true);
+    if (errors.name || errors.message) {
+      // a small "no" shake on each invalid field, then focus the first one
+      if (errors.name) nameShake.start(shake);
+      if (errors.message) messageShake.start(shake);
+      (errors.name ? nameRef : messageRef).current?.focus();
       return;
     }
-    setError('');
     const subject = encodeURIComponent(`Hello from ${name.trim()}`);
     const body = encodeURIComponent(`${message.trim()}\n\n— ${name.trim()}`);
     window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
@@ -93,21 +103,41 @@ export function Contact() {
         <Reveal delay={0.15} variant="slide">
           <form className={styles.form} onSubmit={onSubmit} noValidate>
             <p className={styles.formHead}>Write a message</p>
-            <label className={styles.field}>
-              <span>Your name</span>
-              <input id="contact-name" value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" placeholder="Jordan from Acme Data" />
-            </label>
-            <label className={styles.field}>
-              <span>Message</span>
+            <Field
+              id="contact-name"
+              label="Your name"
+              error={tried ? errors.name : undefined}
+              controls={nameShake}
+            >
+              <input
+                ref={nameRef}
+                id="contact-name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                autoComplete="name"
+                placeholder="Jordan from Acme Data"
+                aria-invalid={tried && !!errors.name}
+                aria-describedby={tried && errors.name ? 'contact-name-error' : undefined}
+              />
+            </Field>
+            <Field
+              id="contact-message"
+              label="Message"
+              error={tried ? errors.message : undefined}
+              hint={`${message.trim().length} / ${MIN_MESSAGE} characters minimum`}
+              controls={messageShake}
+            >
               <textarea
+                ref={messageRef}
                 id="contact-message"
                 rows={5}
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="We’re hiring a data engineer for our lakehouse team…"
+                aria-invalid={tried && !!errors.message}
+                aria-describedby={[tried && errors.message ? 'contact-message-error' : '', 'contact-message-hint'].filter(Boolean).join(' ')}
               />
-            </label>
-            {error && <p className={styles.error} role="alert">{error}</p>}
+            </Field>
             <div className={styles.submit}>
               <Button type="submit" variant="primary" magnetic icon="→">
                 Send via email
@@ -118,5 +148,64 @@ export function Contact() {
         </Reveal>
       </div>
     </Section>
+  );
+}
+
+const MIN_MESSAGE = 10;
+const shake = { x: [0, -8, 7, -5, 3, 0], transition: { duration: 0.4 } };
+
+function validate(name: string, message: string) {
+  return {
+    name: name.trim() ? undefined : 'Add your name so I know who to reply to.',
+    message:
+      message.trim().length >= MIN_MESSAGE
+        ? undefined
+        : message.trim()
+          ? `A little more, please: at least ${MIN_MESSAGE} characters.`
+          : 'Write a short message.',
+  };
+}
+
+/** Label, control, then helper text and an inline error tied to the field. */
+function Field({
+  id,
+  label,
+  error,
+  hint,
+  controls,
+  children,
+}: {
+  id: string;
+  label: string;
+  error?: string;
+  hint?: string;
+  controls: ReturnType<typeof useAnimationControls>;
+  children: ReactNode;
+}) {
+  return (
+    <motion.div className={styles.field} animate={controls}>
+      <label htmlFor={id}>{label}</label>
+      {children}
+      {hint && (
+        <span id={`${id}-hint`} className={styles.fieldHint}>
+          {hint}
+        </span>
+      )}
+      <AnimatePresence initial={false}>
+        {error && (
+          <motion.span
+            key={error}
+            id={`${id}-error`}
+            className={styles.fieldError}
+            role="alert"
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.2 } }}
+            exit={{ opacity: 0, transition: { duration: 0.13 } }}
+          >
+            {error}
+          </motion.span>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 }

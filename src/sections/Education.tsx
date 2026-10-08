@@ -2,12 +2,13 @@ import { education, publication } from '@/data/resume';
 import { Section } from '@/components/layout/Section';
 import { Reveal, RevealItem } from '@/components/ui/Reveal';
 import { SpotlightCard } from '@/components/ui/SpotlightCard';
+import { stagger } from '@/lib/motion';
 import styles from './Education.module.css';
 
 export function Education() {
   return (
     <Section id="education" title="Education and research." accent={['research.']}>
-      <Reveal className={styles.grid} stagger={0.12}>
+      <Reveal className={styles.grid} stagger={stagger.base}>
         {education.map((e) => (
           <RevealItem key={e.degree} className={styles.degree} variant="file">
             <span className={styles.years}>{e.years}</span>

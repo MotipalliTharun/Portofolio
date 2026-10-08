@@ -1,4 +1,4 @@
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { createContext, useCallback, useContext, useRef, useState, type ReactNode } from 'react';
 import { stages, type StageId } from '@/data/resume';
 import { useScrollTo } from './SmoothScroll';

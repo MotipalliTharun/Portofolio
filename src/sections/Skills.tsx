@@ -1,4 +1,4 @@
-import { AnimatePresence, motion, useInView, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion';
 import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import { delivery, languages, practices, skillFlow, type FlowStageId, type Skill } from '@/data/resume';
 import { practiceArt, stageArt } from '@/data/stickers';
@@ -7,7 +7,7 @@ import { Reveal, RevealItem } from '@/components/ui/Reveal';
 import { traceSkill, type LineageSource } from '@/lib/lineage';
 import { useUI } from '@/providers/UIProvider';
 import { useScrollTo } from '@/providers/SmoothScroll';
-import { ease, spring } from '@/lib/motion';
+import { ease, spring, stagger } from '@/lib/motion';
 import { cn } from '@/lib/cn';
 import {
   faBrain,
@@ -307,7 +307,7 @@ export function Skills() {
       {/* How I work with people: the only place people stickers appear */}
       <div className={styles.practices}>
         <h3 className={styles.practicesTitle}>How I work with people around the pipeline</h3>
-        <Reveal as="ul" className={styles.practiceList} stagger={0.12}>
+        <Reveal as="ul" className={styles.practiceList} stagger={stagger.base}>
           {practices.map((p) => (
             <RevealItem as="li" key={p.id} variant="scale" className={styles.practice}>
               <img src={practiceArt[p.id]} alt="" width="112" height="112" loading="lazy" decoding="async" className={styles.practiceArt} />

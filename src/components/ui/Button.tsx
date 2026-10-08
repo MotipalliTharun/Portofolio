@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useSpring, useReducedMotion } from 'motion/react';
+import { motion, useMotionValue, useSpring, useReducedMotion } from 'framer-motion';
 import type { ReactNode, MouseEvent, PointerEvent } from 'react';
 import { cn } from '@/lib/cn';
 import styles from './Button.module.css';

@@ -118,3 +118,34 @@
       linear-gradient(180deg, var(--bg) 0%, rgb(12 9 8 / 0.25) 14%, rgb(12 9 8 / 0.1) 45%, rgb(12 9 8 / 0.75) 80%, var(--bg) 100%);
   }
 }
+
+/* reduced motion: a still split screen instead of a pinned dissolve */
+.still { height: auto; }
+.still .sticky { position: relative; height: max(100svh, 640px); }
+.still .nightImg { clip-path: inset(0 0 0 50%); }
+.still .sticky::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, #f6c27a, #9fb1ff, transparent);
+}
+.still .shade {
+  background:
+    linear-gradient(180deg, transparent 45%, rgb(12 9 8 / 0.8) 100%),
+    linear-gradient(180deg, var(--bg) 0%, transparent 6%);
+}
+.still .clock,
+.still .track { display: none; }
+.still .beat { max-width: min(420px, 44%); }
+.still .beatNight { left: calc(50% + var(--gutter)); }
+
+@media (max-width: 760px) {
+  .still .nightImg { clip-path: inset(50% 0 0 0); }
+  .still .sticky::after { top: 50%; bottom: auto; left: 0; right: 0; width: auto; height: 2px; background: linear-gradient(90deg, transparent, #f6c27a, #9fb1ff, transparent); }
+  .still .shade { background: linear-gradient(180deg, rgb(12 9 8 / 0.15) 0%, rgb(12 9 8 / 0.7) 48%, rgb(12 9 8 / 0.15) 52%, rgb(12 9 8 / 0.8) 100%); }
+  .still .beat { max-width: calc(100% - var(--gutter) * 2); bottom: calc(50% + 24px); }
+  .still .beatNight { left: var(--gutter); bottom: 32px; }
+}

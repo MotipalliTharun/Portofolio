@@ -1,5 +1,5 @@
 import { lazy, Suspense, useCallback, useEffect, useState } from 'react';
-import { MotionConfig } from 'motion/react';
+import { MotionConfig } from 'framer-motion';
 import { SmoothScroll } from '@/providers/SmoothScroll';
 import { UIProvider, useUI } from '@/providers/UIProvider';
 import { SlashTransition } from '@/providers/SlashTransition';

@@ -2,6 +2,7 @@ import type { CSSProperties, ReactNode } from 'react';
 import { stageById, type StageId } from '@/data/resume';
 import { SplitText } from '@/components/ui/SplitText';
 import { StageConnector } from './StageConnector';
+import { ChapterNext } from './ChapterNext';
 import { cn } from '@/lib/cn';
 import styles from './Section.module.css';
 
@@ -39,6 +40,7 @@ export function Section({ id, title, accent, intro, children, className }: Secti
           </div>
         </header>
         {children}
+        <ChapterNext from={id} />
       </div>
     </section>
   );

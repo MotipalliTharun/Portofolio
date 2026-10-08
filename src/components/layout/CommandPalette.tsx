@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import { profile, projects, projectTags, stages } from '@/data/resume';
 import { useUI } from '@/providers/UIProvider';

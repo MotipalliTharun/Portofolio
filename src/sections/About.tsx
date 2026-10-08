@@ -5,6 +5,7 @@ import { SpotlightCard } from '@/components/ui/SpotlightCard';
 import { ScrambleText } from '@/components/ui/ScrambleText';
 import { scenes } from '@/data/scenes';
 import { SceneBanner } from '@/components/scene/SceneBanner';
+import { stagger } from '@/lib/motion';
 import styles from './About.module.css';
 
 const fn = ['own()', 'validate()', 'ship()'];
@@ -30,7 +31,7 @@ export function About() {
           </Reveal>
         </div>
 
-        <Reveal className={styles.glance} stagger={0.08}>
+        <Reveal className={styles.glance} stagger={stagger.tight}>
           <p className={styles.glanceTitle}>At a glance</p>
           <dl className={styles.facts}>
             {profile.glance.map((f) => (
@@ -43,7 +44,7 @@ export function About() {
         </Reveal>
       </div>
 
-      <Reveal className={styles.principles} stagger={0.12}>
+      <Reveal className={styles.principles} stagger={stagger.base}>
         {profile.principles.map((p, i) => (
           <RevealItem key={p.title} variant="scale">
             <SpotlightCard className={styles.principle}>

@@ -1,6 +1,7 @@
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, type ReactNode } from 'react';
 import { useScrollLock } from '@/providers/SmoothScroll';
+import { exitOf } from '@/lib/motion';
 import styles from './Drawer.module.css';
 
 interface DrawerProps {
@@ -8,15 +9,18 @@ interface DrawerProps {
   onClose: () => void;
   labelledBy: string;
   children: ReactNode;
+  /** 'fade' lets a shared element (e.g. a card's cover) morph into the panel instead of sliding with it */
+  entrance?: 'slide' | 'fade';
 }
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input, textarea, select, [tabindex]:not([tabindex="-1"])';
 
 /** Accessible side sheet: traps focus, closes on Esc or backdrop click, restores focus on close. */
-export function Drawer({ open, onClose, labelledBy, children }: DrawerProps) {
+export function Drawer({ open, onClose, labelledBy, children, entrance = 'slide' }: DrawerProps) {
   const panel = useRef<HTMLDivElement>(null);
   const lock = useScrollLock();
   const reduce = useReducedMotion();
+  const fade = reduce || entrance === 'fade';
 
   useEffect(() => {
     if (!open) return;
@@ -55,9 +59,8 @@ export function Drawer({ open, onClose, labelledBy, children }: DrawerProps) {
             className={styles.scrim}
             onClick={onClose}
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            animate={{ opacity: 1, transition: { duration: 0.3 } }}
+            exit={{ opacity: 0, transition: { duration: exitOf(0.3) } }}
           />
           <motion.div
             ref={panel}
@@ -67,10 +70,9 @@ export function Drawer({ open, onClose, labelledBy, children }: DrawerProps) {
             aria-labelledby={labelledBy}
             tabIndex={-1}
             data-lenis-prevent
-            initial={reduce ? { opacity: 0 } : { x: '100%' }}
-            animate={reduce ? { opacity: 1 } : { x: 0 }}
-            exit={reduce ? { opacity: 0 } : { x: '100%' }}
-            transition={{ type: 'spring', stiffness: 260, damping: 32 }}
+            initial={fade ? { opacity: 0 } : { x: '100%' }}
+            animate={fade ? { opacity: 1, transition: { duration: 0.25 } } : { x: 0, transition: { type: 'spring', stiffness: 260, damping: 32 } }}
+            exit={fade ? { opacity: 0, transition: { duration: exitOf(0.25) } } : { x: '100%', transition: { duration: exitOf(0.45), ease: [0.4, 0, 1, 1] } }}
           >
             <button type="button" className={styles.close} onClick={onClose} aria-label="Close">
               <span aria-hidden="true">×</span>

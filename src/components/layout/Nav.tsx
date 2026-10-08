@@ -1,4 +1,4 @@
-import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useSpring } from 'motion/react';
+import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useSpring } from 'framer-motion';
 import { useEffect, useState, type MouseEvent, type ReactNode } from 'react';
 import { profile, stages, stageById, type StageId } from '@/data/resume';
 import { useScrollLock } from '@/providers/SmoothScroll';

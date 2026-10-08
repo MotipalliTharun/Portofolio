@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from 'motion/react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Fragment } from 'react';
 import { cn } from '@/lib/cn';
 import styles from './FlowDiagram.module.css';

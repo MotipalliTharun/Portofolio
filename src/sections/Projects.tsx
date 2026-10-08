@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { projects, projectTags } from '@/data/resume';
 import { Section } from '@/components/layout/Section';
@@ -9,6 +9,7 @@ import { Reveal } from '@/components/ui/Reveal';
 import { useUI, type ProjectFilter } from '@/providers/UIProvider';
 import { projectArt } from '@/data/stickers';
 import { projectPhotos } from '@/data/photos';
+import { spring, stagger, touch } from '@/lib/motion';
 import styles from './Projects.module.css';
 
 const ProjectDrawer = lazy(() => import('./ProjectDrawer'));
@@ -53,13 +54,15 @@ export function Projects() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.94 }}
               transition={{ type: 'spring', stiffness: 260, damping: 28 }}
+              whileTap={{ ...touch.press, transition: spring.touch }}
             >
-              <Reveal className={styles.cell} variant="drop" delay={(i % 2) * 0.12 + Math.floor(i / 2) * 0.08}>
+              <Reveal className={styles.cell} variant="drop" delay={i * stagger.base}>
                 <SpotlightCard interactive className={styles.card}>
-                  <div className={styles.cover}>
+                  {/* morphs into the case-study drawer's cover when opened */}
+                  <motion.div className={styles.cover} layoutId={`cover-${p.id}`} transition={spring.morph}>
                     <img src={projectPhotos[p.id]} alt="" width="1100" height="619" loading="lazy" decoding="async" className={styles.photo} />
                     <img src={projectArt[p.id]} alt="" width="64" height="64" loading="lazy" decoding="async" className={styles.badge} />
-                  </div>
+                  </motion.div>
                   <div className={styles.heading}>
                     <span className={styles.kind}>{p.kind}</span>
                     <h3 className={styles.title}>

@@ -73,15 +73,18 @@ export function FrameSequence({ dir, count, progress, range, idleEnd = 0, handov
     };
     for (let k = 0; k < 6; k++) loadNext();
 
-    // canvas resolution follows its CSS box, capped at the source width
+    // canvas resolution follows its CSS box at device pixels (bounded at 2x the source),
+    // so the browser's high-quality resampling does the upscale rather than CSS stretching
     const resize = () => {
       const src = frames.find(Boolean);
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const w = Math.round(c.clientWidth * dpr);
-      const max = src ? src.naturalWidth : 1280;
+      const max = (src ? src.naturalWidth : 1920) * 2;
       const scale = Math.min(1, max / Math.max(1, w));
       c.width = Math.max(1, Math.round(w * scale));
       c.height = Math.max(1, Math.round(c.clientHeight * dpr * scale));
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
       dirty = true;
     };
     const ro = new ResizeObserver(resize);

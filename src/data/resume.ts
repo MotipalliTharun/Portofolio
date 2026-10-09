@@ -37,7 +37,8 @@ export const profile = {
   linkedinLabel: 'linkedin.com/in/tharun-motipalli',
   availability: 'Open to data engineering roles',
   /** Drop the PDF at public/Tharun_Motipalli_Resume.pdf and the résumé buttons appear. */
-  resume: `${import.meta.env.BASE_URL}Tharun_Motipalli_Resume.pdf`,
+  // `import.meta.env` is Vite-only; the fallback lets tools/resume-agent import this file under Node.
+  resume: `${import.meta.env?.BASE_URL ?? '/'}Tharun_Motipalli_Resume.pdf`,
   rotatingRoles: ['lakehouse pipelines', 'data quality systems', 'REST APIs', 'Airflow workflows'],
   summary: [
     'I’m a software and data engineer with production experience across healthcare (Cigna), pharmaceutical manufacturing (Johnson & Johnson) and UK energy tech (clearVUE).',

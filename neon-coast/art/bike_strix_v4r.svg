@@ -1,0 +1,173 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3840 2160" width="3840" height="2160">
+<defs>
+  <radialGradient id="bg" cx="0.5" cy="0.55" r="0.8">
+    <stop offset="0" stop-color="#2a1238"/>
+    <stop offset="0.6" stop-color="#120a1c"/>
+    <stop offset="1" stop-color="#05030a"/>
+  </radialGradient>
+  <pattern id="grid" width="120" height="120" patternUnits="userSpaceOnUse">
+    <path d="M120 0 L0 0 0 120" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="2"/>
+  </pattern>
+  <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#2a2e38"/>
+    <stop offset="0.35" stop-color="#14161c"/>
+    <stop offset="1" stop-color="#08090c"/>
+  </linearGradient>
+  <linearGradient id="ti" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#e3d9ff"/>
+    <stop offset="0.45" stop-color="#8a86a8"/>
+    <stop offset="0.55" stop-color="#5e5a7a"/>
+    <stop offset="1" stop-color="#2a2838"/>
+  </linearGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#8a6512"/>
+    <stop offset="0.5" stop-color="#f2cf5b"/>
+    <stop offset="1" stop-color="#8a6512"/>
+  </linearGradient>
+  <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#7fe9ff" stop-opacity="0.55"/>
+    <stop offset="1" stop-color="#1a1030" stop-opacity="0.85"/>
+  </linearGradient>
+  <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#ff2e88" stop-opacity="0.18"/>
+    <stop offset="1" stop-color="#ff2e88" stop-opacity="0"/>
+  </linearGradient>
+  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="8" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="soft"><feGaussianBlur stdDeviation="30"/></filter>
+  <g id="spokes">
+    <path d="M-12 -95 L12 -95 L22 -285 L-22 -285 Z"/>
+    <path d="M-12 -95 L12 -95 L22 -285 L-22 -285 Z" transform="rotate(72)"/>
+    <path d="M-12 -95 L12 -95 L22 -285 L-22 -285 Z" transform="rotate(144)"/>
+    <path d="M-12 -95 L12 -95 L22 -285 L-22 -285 Z" transform="rotate(216)"/>
+    <path d="M-12 -95 L12 -95 L22 -285 L-22 -285 Z" transform="rotate(288)"/>
+  </g>
+</defs>
+
+<rect width="3840" height="2160" fill="url(#bg)"/>
+<rect width="3840" height="2160" fill="url(#grid)"/>
+
+<!-- title block -->
+<text x="160" y="230" font-family="Arial, sans-serif" font-size="44" letter-spacing="18" fill="#19e6d0">NEON COAST · HERO VEHICLE</text>
+<text x="160" y="350" font-family="Arial Black, Arial, sans-serif" font-size="120" fill="#f4f1ff">STRIX V4R</text>
+<text x="160" y="420" font-family="Arial, sans-serif" font-size="40" fill="#8b8aa3">Mari Reyes' street-legal superbike · #27 · matte "Midnight Ink" with Biscayne teal &amp; South Beach magenta</text>
+
+<!-- floor -->
+<rect x="0" y="1880" width="3840" height="280" fill="url(#floor)"/>
+<ellipse cx="1900" cy="1885" rx="1050" ry="50" fill="#000" opacity="0.7" filter="url(#soft)"/>
+
+<g transform="translate(0 0)">
+  <!-- rear wheel -->
+  <circle cx="1150" cy="1500" r="380" fill="#0a0a0c"/>
+  <circle cx="1150" cy="1500" r="380" fill="none" stroke="#1d1f26" stroke-width="18"/>
+  <circle cx="1150" cy="1500" r="292" fill="#141519"/>
+  <circle cx="1150" cy="1500" r="292" fill="none" stroke="#19e6d0" stroke-width="8"/>
+  <g transform="translate(1150 1500)" fill="#2f3340"><use href="#spokes"/></g>
+  <circle cx="1150" cy="1500" r="150" fill="none" stroke="#3b3f4c" stroke-width="22" stroke-dasharray="14 10"/>
+  <circle cx="1150" cy="1500" r="60" fill="url(#ti)"/>
+
+  <!-- front wheel -->
+  <circle cx="2650" cy="1500" r="370" fill="#0a0a0c"/>
+  <circle cx="2650" cy="1500" r="370" fill="none" stroke="#1d1f26" stroke-width="18"/>
+  <circle cx="2650" cy="1500" r="284" fill="#141519"/>
+  <circle cx="2650" cy="1500" r="284" fill="none" stroke="#ff2e88" stroke-width="8"/>
+  <g transform="translate(2650 1500)" fill="#2f3340"><use href="#spokes"/></g>
+  <circle cx="2650" cy="1500" r="200" fill="none" stroke="url(#ti)" stroke-width="40" stroke-dasharray="26 14"/>
+  <rect x="2540" y="1330" width="70" height="150" rx="16" fill="#d4a62a"/>
+  <circle cx="2650" cy="1500" r="55" fill="url(#ti)"/>
+
+  <!-- chain + swingarm + shock -->
+  <path d="M1150 1350 L1730 1250 M1150 1650 L1730 1370" stroke="#3a3e4a" stroke-width="14"/>
+  <circle cx="1730" cy="1310" r="60" fill="#2b2f36"/>
+  <path d="M1700 1210 L1715 1320 L1160 1540 L1150 1455 Z" fill="#2b2f36"/>
+  <path d="M1700 1210 L1150 1455" stroke="#19e6d0" stroke-width="6" opacity="0.7"/>
+  <path d="M1560 1000 L1640 1250" stroke="#f2cf5b" stroke-width="34" stroke-linecap="round"/>
+  <path d="M1560 1010 L1640 1240" stroke="#ff2e88" stroke-width="44" stroke-dasharray="6 10" opacity="0.8"/>
+
+  <!-- engine -->
+  <path d="M1650 1060 L2050 1060 L2120 1300 L2020 1460 L1720 1460 L1640 1300 Z" fill="#1c1e25"/>
+  <g stroke="#2e323c" stroke-width="12">
+    <path d="M1690 1110 L2050 1110"/><path d="M1680 1160 L2070 1160"/><path d="M1670 1210 L2085 1210"/>
+  </g>
+  <circle cx="1880" cy="1360" r="70" fill="#262932" stroke="url(#ti)" stroke-width="10"/>
+
+  <!-- exhaust -->
+  <path d="M2000 1450 Q1800 1520 1560 1440 L1500 1330" fill="none" stroke="url(#ti)" stroke-width="40" stroke-linecap="round"/>
+  <path d="M1520 1300 L1170 1150 L1135 1235 L1480 1400 Z" fill="url(#ti)"/>
+  <ellipse cx="1150" cy="1192" rx="26" ry="48" transform="rotate(23 1150 1192)" fill="#111"/>
+  <path d="M1520 1300 L1170 1150" stroke="#fff" stroke-opacity="0.5" stroke-width="5"/>
+
+  <!-- tail -->
+  <path d="M930 830 L1420 900 L1440 1020 L1260 1030 Q1100 960 930 830 Z" fill="url(#body)"/>
+  <path d="M930 830 L1420 900" stroke="#ff2e88" stroke-width="10" filter="url(#glow)"/>
+  <path d="M945 845 L1010 875" stroke="#ff1a3c" stroke-width="26" stroke-linecap="round" filter="url(#glow)"/>
+  <path d="M1080 925 L1350 955" stroke="#19e6d0" stroke-width="16" stroke-linecap="round"/>
+  <path d="M1040 960 L980 1120 L1060 1130" fill="none" stroke="#2b2f36" stroke-width="14"/>
+  <rect x="1000" y="1100" width="120" height="80" rx="6" fill="#e9e4dc" transform="rotate(8 1060 1140)"/>
+
+  <!-- seat -->
+  <path d="M1380 900 Q1560 860 1730 905 L1735 960 L1400 960 Z" fill="#1a1a1e"/>
+  <path d="M1400 905 Q1560 875 1720 912" fill="none" stroke="#3a3a44" stroke-width="6" stroke-dasharray="14 10"/>
+
+  <!-- forks sit behind the fairing -->
+  <path d="M2455 860 L2620 1450" stroke="url(#gold)" stroke-width="64" stroke-linecap="round"/>
+  <path d="M2545 1180 L2620 1450" stroke="#2b2f36" stroke-width="48" stroke-linecap="round"/>
+
+  <!-- main fairing -->
+  <path d="M2280 850 Q2520 790 2810 935 Q2870 985 2825 1045 L2610 1205 Q2450 1380 2200 1465 L1860 1470 Q1790 1300 1900 1150 L2280 1000 Z" fill="url(#body)"/>
+  <path d="M1900 1150 L2380 1020 Q2560 990 2760 1050" fill="none" stroke="#19e6d0" stroke-width="34" filter="url(#glow)"/>
+  <path d="M1950 1250 L2400 1120 Q2520 1100 2640 1150" fill="none" stroke="#ff2e88" stroke-width="18" filter="url(#glow)"/>
+  <path d="M2060 1300 L2260 1240 L2290 1330 L2120 1380 Z" fill="#0a0b0e"/>
+  <path d="M2080 1310 L2250 1262 M2095 1340 L2265 1292" stroke="#2c2f38" stroke-width="10"/>
+  <text x="2310" y="1350" font-family="Arial Black, Arial, sans-serif" font-size="150" fill="#f4f1ff" transform="skewX(-12)">27</text>
+  <!-- winglet -->
+  <path d="M2560 1090 L2720 1060 L2700 1120 L2580 1140 Z" fill="#0d0f14" stroke="#19e6d0" stroke-width="5"/>
+
+  <!-- tank -->
+  <path d="M1700 935 Q1800 765 2100 760 Q2260 770 2335 852 L2285 1005 L1720 1005 Z" fill="url(#body)"/>
+  <path d="M1790 830 Q1950 780 2200 790" fill="none" stroke="#ffffff" stroke-opacity="0.25" stroke-width="10"/>
+  <text x="1820" y="950" font-family="Arial, sans-serif" font-weight="bold" font-size="52" letter-spacing="14" fill="#19e6d0">STRIX</text>
+
+  <!-- forks, bars, screen, headlight -->
+  <path d="M2330 858 Q2420 700 2570 755 Q2620 800 2525 870 Z" fill="url(#screen)"/>
+  <path d="M2360 840 Q2430 735 2540 765" fill="none" stroke="#ffffff" stroke-opacity="0.5" stroke-width="6"/>
+  <path d="M2380 880 L2290 850" stroke="#2b2f36" stroke-width="26" stroke-linecap="round"/>
+  <path d="M2600 830 L2680 790" stroke="#2b2f36" stroke-width="10"/>
+  <path d="M2650 770 L2740 790 L2720 820 L2640 800 Z" fill="#0d0f14" stroke="#ff2e88" stroke-width="5"/>
+  <path d="M2685 930 L2812 975 L2792 1003 L2665 962 Z" fill="#e8fbff" filter="url(#glow)"/>
+  <path d="M2810 980 L3700 800 L3700 1180 Z" fill="#bff6ff" opacity="0.06"/>
+</g>
+
+<!-- callouts -->
+<g font-family="Arial, sans-serif" font-size="38" fill="#e8e8f0">
+  <g stroke="#8b8aa3" stroke-width="3" fill="none">
+    <path d="M2740 975 L3060 620 L3300 620"/>
+    <path d="M2470 1000 L2470 560 L2700 560"/>
+    <path d="M1320 1250 L1000 700 L640 700"/>
+    <path d="M980 845 L760 560 L640 560"/>
+    <path d="M1880 1360 L1880 1950 L1920 1950"/>
+    <path d="M2650 1700 L3000 1820 L3300 1820"/>
+  </g>
+  <text x="3080" y="600">Slit LED "owl-eye" headlamp</text>
+  <text x="2720" y="545">Smoked double-bubble screen</text>
+  <text x="250" y="690">Titanium up-swept can — the bike's</text>
+  <text x="250" y="735" fill="#8b8aa3">voice: crackle on overrun, scene cue</text>
+  <text x="250" y="550">Knife-edge tail, magenta neon trim</text>
+  <text x="1940" y="1963">1,000 cc counter-rotating V4 · 215 hp</text>
+  <text x="3020" y="1810">Gold USD forks · Brembo-style discs</text>
+</g>
+
+<!-- spec card -->
+<g transform="translate(3060 240)">
+  <rect width="620" height="270" rx="16" fill="#0b0712" stroke="#2a2340" stroke-width="3"/>
+  <g font-family="Arial, sans-serif" font-size="34" fill="#8b8aa3">
+    <text x="36" y="70">Top speed</text><text x="584" y="70" text-anchor="end" fill="#f4f1ff">186 mph</text>
+    <text x="36" y="130">0–60 mph</text><text x="584" y="130" text-anchor="end" fill="#f4f1ff">2.6 s</text>
+    <text x="36" y="190">Dry weight</text><text x="584" y="190" text-anchor="end" fill="#f4f1ff">172 kg</text>
+    <text x="36" y="245">Plate</text><text x="584" y="245" text-anchor="end" fill="#f28c28">FL · MRI 27</text>
+  </g>
+</g>
+<text x="160" y="2070" font-family="Arial, sans-serif" font-size="32" letter-spacing="8" fill="#5d5a75">FICTIONAL DESIGN · SIDE ELEVATION · 3840×2160</text>
+</svg>
